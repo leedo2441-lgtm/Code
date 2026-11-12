@@ -1,12 +1,22 @@
 <!doctype html>
 <html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#090d18"><title>미적분 수식 탐구실</title>
-<script src="https://cdn.jsdelivr.net/npm/nerdamer@1.1.13/all.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/nerdamer@1.1.13/all.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/mathlive"></script>
 <style>
 :root{color-scheme:dark;--bg:#090d18;--panel:#121c2c;--line:#293850;--muted:#91a0b8;--text:#eef3ff;--blue:#76a9ff;--cyan:#63e0d1;--orange:#ffb86b}
 *{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 80% -20%,#1b3153,transparent 45%),var(--bg);color:var(--text);font-family:system-ui,"Noto Sans KR",sans-serif;line-height:1.6}header,main,footer{max-width:1200px;margin:auto;padding-left:22px;padding-right:22px}header{padding-top:38px;padding-bottom:20px}.eyebrow{color:var(--cyan);font-size:12px;letter-spacing:.18em;font-weight:800}h1{font-size:clamp(30px,5vw,52px);letter-spacing:-.05em;line-height:1.12;margin:10px 0}header p{color:var(--muted);max-width:760px}.inputbox{display:flex;gap:9px;align-items:center;flex-wrap:wrap;background:#101a2a;border:1px solid var(--line);padding:13px;border-radius:16px;margin:12px 0 16px}.inputbox label{color:var(--muted);font-size:13px}.inputbox input{flex:1;min-width:180px;background:#080f1c;border:1px solid #344762;color:white;border-radius:10px;padding:12px;font:16px ui-monospace,monospace}.inputbox button,.tabs button{font:inherit;border:1px solid var(--line);background:#172338;color:var(--text);border-radius:11px;padding:10px 16px;cursor:pointer}.inputbox button{background:#244b7d;border-color:#477ec2}.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 16px}.tabs button.active{background:#1d3b68;border-color:#548de2}.layout{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(300px,1fr);gap:15px}.panel{background:linear-gradient(145deg,#131d2d,#0f1725);border:1px solid var(--line);border-radius:18px;padding:17px;min-width:0}.panel h2{font-size:17px;margin:0 0 12px}.graph-wrap{background:#0b1220;border:1px solid #243149;border-radius:13px;overflow:hidden}svg{display:block;width:100%;height:auto}.controls{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:13px}.controls label{font-size:13px;color:var(--muted)}input[type=range]{accent-color:var(--blue);width:min(250px,55vw)}.metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:11px}.metric{background:#0d1625;border:1px solid #243149;border-radius:12px;padding:10px}.metric small{display:block;color:var(--muted);font-size:11px}.metric strong{font-size:17px;color:var(--cyan);font-variant-numeric:tabular-nums;overflow-wrap:anywhere}.formula{font-family:ui-monospace,monospace;color:#b8d2ff;background:#0b1423;border:1px solid #253652;border-radius:10px;padding:10px;margin:10px 0;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere}.explain{font-size:14px;color:#c4cee0}.step{padding:10px 12px;border-left:2px solid var(--blue);background:#101a2a;border-radius:0 10px 10px 0;font-size:13px;color:#c4cee0;margin:8px 0}.hint{font-size:12px;color:var(--muted)}.error{color:#ff9b9b;font-size:13px;min-height:20px}.examples{display:flex;gap:7px;flex-wrap:wrap;margin-top:8px}.examples button{background:#111d30;color:#bcd4f8;border:1px solid #2d405c;border-radius:20px;padding:5px 10px;font-size:12px;cursor:pointer}footer{padding:22px 22px 35px;color:#71819a;font-size:12px}@media(max-width:850px){.layout{grid-template-columns:1fr}header{padding-top:27px}.panel{padding:13px}}
+
+/* intro and account layer */
+#intro{position:fixed;inset:0;z-index:1000;display:grid;place-items:center;padding:24px;background:radial-gradient(ellipse at 50% 35%,#1b3c68 0%,#090d18 68%);transition:opacity .6s,visibility .6s}
+#intro.hide{opacity:0;visibility:hidden;pointer-events:none}.intro-inner{width:min(850px,100%);text-align:center}.intro-kicker{color:#63e0d1;letter-spacing:.22em;font-size:12px;font-weight:800}.intro-inner h1{font-size:clamp(36px,8vw,76px);margin:15px 0}.intro-sub{color:#aebdd3}.formula-rain{height:150px;position:relative;overflow:hidden;margin:20px 0}.formula-rain span{position:absolute;left:var(--x);top:var(--y);color:#9fc4ff;font:clamp(17px,3vw,28px) Georgia,serif;opacity:0;animation:formulaFloat 4.8s infinite;animation-delay:var(--delay);white-space:nowrap}@keyframes formulaFloat{0%{opacity:0;transform:translateY(28px) scale(.85)}18%,72%{opacity:.8}100%{opacity:0;transform:translateY(-35px) scale(1.08)}}.start-btn{border:1px solid #70aaff;background:linear-gradient(120deg,#24518a,#3476b9);color:white;border-radius:14px;padding:14px 34px;font-size:17px;font-weight:750;cursor:pointer;box-shadow:0 8px 35px #367bd655}.intro-links{margin-top:18px;color:#8ea0ba;font-size:13px}.intro-links button{background:none;border:0;color:#9fc4ff;text-decoration:underline;cursor:pointer;font:inherit}
+#auth{position:fixed;inset:0;z-index:1100;display:none;place-items:center;padding:20px;background:#050914dd;backdrop-filter:blur(10px)}#auth.open{display:grid}.auth-card{width:min(420px,100%);padding:24px;background:#121c2c;border:1px solid #344762;border-radius:20px;box-shadow:0 20px 70px #0009}.auth-card h2{margin:0 0 6px}.auth-card p{color:#9eacc2;font-size:13px}.auth-card input{display:block;width:100%;padding:12px;margin:10px 0;background:#080f1c;border:1px solid #344762;border-radius:10px;color:white;font:inherit}.auth-actions{display:flex;gap:8px;margin-top:12px}.auth-actions button{flex:1;padding:11px;border-radius:10px;border:1px solid #3b5c84;background:#1d3b68;color:white;cursor:pointer}.auth-actions button.secondary{background:#101827}.auth-note{font-size:11px!important;color:#8292aa!important}.auth-status{min-height:20px;color:#ffbd83;font-size:13px}
+.inputbox math-field{flex:1;min-width:190px;display:block;background:#080f1c;border:1px solid #344762;border-radius:10px;color:white;padding:11px 13px;font-size:21px;--caret-color:#76a9ff;--selection-background-color:#254a78;--contains-highlight-background-color:#172a45}
+math-field::part(virtual-keyboard-toggle){display:none}
+@media(max-width:600px){.formula-rain{height:125px}.auth-card{padding:19px}}
 </style></head><body>
+<div id="intro"><div class="intro-inner"><div class="intro-kicker">VISUAL MATHEMATICS LAB</div><h1>수학을 움직여 보다</h1><p class="intro-sub">수식을 입력하고, 그래프가 변하는 이유를 직접 탐구해 보자.</p><div class="formula-rain" aria-hidden="true"><span style="--x:8%;--y:12%;--delay:0s">\\lim_{h\\to0}</span><span style="--x:65%;--y:20%;--delay:.7s">\\int_a^b f(x)dx</span><span style="--x:28%;--y:62%;--delay:1.4s">\\frac{d}{dx}x^n</span><span style="--x:76%;--y:65%;--delay:2.1s">e^{i\\pi}+1=0</span><span style="--x:43%;--y:8%;--delay:2.8s">\\sqrt{x^2+1}</span><span style="--x:4%;--y:70%;--delay:3.5s">\\sin^2x+\\cos^2x=1</span></div><button class="start-btn" id="start">시작하기</button><div class="intro-links">처음이신가요? <button id="open-signup">회원가입</button> · 이미 계정이 있나요? <button id="open-login">로그인</button></div></div></div>
+<div id="auth"><div class="auth-card"><h2 id="auth-title">회원가입</h2><p>이 브라우저에서만 사용하는 체험용 계정이야.</p><input id="auth-user" maxlength="24" placeholder="아이디 (영문·숫자 3~24자)" autocomplete="username"><input id="auth-pass" type="password" minlength="6" placeholder="비밀번호 (6자 이상)" autocomplete="current-password"><div class="auth-status" id="auth-status"></div><div class="auth-actions"><button id="auth-submit">가입하기</button><button class="secondary" id="auth-switch">로그인으로</button><button class="secondary" id="auth-close">닫기</button></div><p class="auth-note">체험용 로그인 정보는 현재 브라우저에만 저장돼. 실제 서비스 계정이나 안전한 서버 인증은 아니며, 다른 기기와 동기화되지 않아.</p></div></div>
 <header><div class="eyebrow">VISUAL MATHEMATICS LAB · 02</div><h1>미적분 수식 탐구실</h1><p>함수를 입력하면 그래프와 미분·적분 결과가 즉시 나타나. 결과만 보여주는 게 아니라, 그 결과가 나오는 원리를 단계별로 확인해 보자.</p>
-<div class="inputbox"><label for="expr">f(x) =</label><input id="expr" value="x^2" autocomplete="off" spellcheck="false" aria-label="함수 수식 입력"><button id="apply">수식 적용</button></div><div class="examples"><span class="hint">예시:</span><button data-ex="x^2">x^2</button><button data-ex="x^3-2*x">x^3-2x</button><button data-ex="sin(x)">sin(x)</button><button data-ex="x^2+3*x+1">x^2+3x+1</button><button data-ex="1/x">1/x</button></div><div id="error" class="error"></div></header>
+<div class="inputbox"><label>f(x) =</label><math-field id="expr" aria-label="LaTeX 수식 입력" virtual-keyboard-mode="onfocus">x^2</math-field><button id="apply">수식 적용</button></div><div class="examples"><span class="hint">예시:</span><button data-ex="x^2">x^2</button><button data-ex="x^3-2*x">x^3-2x</button><button data-ex="sin(x)">sin(x)</button><button data-ex="x^2+3*x+1">x^2+3x+1</button><button data-ex="1/x">1/x</button></div><div id="error" class="error"></div></header>
 <main><nav class="tabs"><button class="active" data-mode="diff">미분이 왜 이렇게 될까?</button><button data-mode="int">적분은 왜 이렇게 될까?</button><button data-mode="both">함수 그래프</button></nav>
 <div class="layout"><section class="panel"><h2 id="graphTitle">접선의 기울기 변화</h2><div class="graph-wrap"><svg id="plot" viewBox="0 0 720 420" role="img" aria-label="입력한 함수의 그래프와 미적분 시각화"></svg></div><div class="controls"><label for="xval" id="xlabel">관찰 위치 x = 1.00</label><input id="xval" type="range" min="-3" max="3" step=".01" value="1"></div><div class="controls" id="ncontrols"><label for="nval">적분 구간 분할</label><input id="nval" type="range" min="4" max="80" step="1" value="20"><span id="nlabel" class="hint">20개</span></div><div class="metrics" id="metrics"></div></section>
 <aside class="panel"><h2 id="sideTitle">미분의 원리</h2><div id="explain" class="explain"></div><div id="steps"></div></aside></div></main><footer>수식 계산은 Nerdamer 기반이야. 그래프와 넓이는 개념을 보여주기 위한 수치 근사이며, 적분상수 C는 별도로 표시해.</footer>
@@ -65,9 +75,39 @@ function render(){
 }
 function setMode(m){mode=m;document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mode===m));$('#ncontrols').style.display=m==='int'||m==='both'?'flex':'none';render()}
 $('#apply').addEventListener('click',()=>{try{compile();render()}catch(e){$('#error').textContent='수식을 읽지 못했어. 예: x^2, x^3-2*x, sin(x)';}});
-$('#expr').addEventListener('keydown',e=>{if(e.key==='Enter')$('#apply').click()});
-document.querySelectorAll('[data-ex]').forEach(b=>b.addEventListener('click',()=>{$('#expr').value=b.dataset.ex;$('#apply').click()}));
+$('#expr').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();$('#apply').click()}});
+document.querySelectorAll('[data-ex]').forEach(b=>b.addEventListener('click',()=>{$('#expr').value=b.dataset.ex.replace(/\^([0-9]+)/g,'^{$1}').replace(/\*/g,'\\cdot ');$('#apply').click()}));
 document.querySelectorAll('[data-mode]').forEach(b=>b.addEventListener('click',()=>setMode(b.dataset.mode)));
 $('#xval').addEventListener('input',draw);$('#nval').addEventListener('input',draw);
+
+let authMode='signup';
+const authStoreKey='calc-lab-demo-account-v1';
+function showAuth(mode){authMode=mode;$('#auth-title').textContent=mode==='signup'?'회원가입':'로그인';$('#auth-submit').textContent=mode==='signup'?'가입하기':'로그인';$('#auth-switch').textContent=mode==='signup'?'로그인으로':'회원가입으로';$('#auth-status').textContent='';$('#auth').classList.add('open')}
+async function digest(text){const bytes=new TextEncoder().encode(text);const hash=await crypto.subtle.digest('SHA-256',bytes);return Array.from(new Uint8Array(hash)).map(v=>v.toString(16).padStart(2,'0')).join('')}
+$('#start').addEventListener('click',()=>$('#intro').classList.add('hide'));
+$('#open-signup').addEventListener('click',()=>showAuth('signup'));
+$('#open-login').addEventListener('click',()=>showAuth('login'));
+$('#auth-close').addEventListener('click',()=>$('#auth').classList.remove('open'));
+$('#auth-switch').addEventListener('click',()=>showAuth(authMode==='signup'?'login':'signup'));
+$('#auth-submit').addEventListener('click',async()=>{
+ const user=$('#auth-user').value.trim(),pass=$('#auth-pass').value;
+ if(!/^[a-zA-Z0-9_]{3,24}$/.test(user)||pass.length<6){$('#auth-status').textContent='아이디는 영문·숫자 3~24자, 비밀번호는 6자 이상으로 입력해 줘.';return}
+ if(!crypto?.subtle){$('#auth-status').textContent='보안 기능을 사용할 수 없는 환경이야. HTTPS로 접속해 줘.';return}
+ let accounts={};try{accounts=JSON.parse(localStorage.getItem(authStoreKey)||'{}')}catch(e){}
+ if(authMode==='signup'){
+  if(accounts[user]){$('#auth-status').textContent='이미 등록된 아이디야.';return}
+  const salt=Array.from(crypto.getRandomValues(new Uint8Array(16))).map(v=>v.toString(16).padStart(2,'0')).join('');
+  accounts[user]={salt,hash:await digest(salt+pass)};
+  localStorage.setItem(authStoreKey,JSON.stringify(accounts));
+  $('#auth-status').textContent='체험용 계정이 만들어졌어. 로그인해 줘.';
+  authMode='login';$('#auth-title').textContent='로그인';$('#auth-submit').textContent='로그인';$('#auth-switch').textContent='회원가입으로';$('#auth-pass').value='';
+ }else{
+  const account=accounts[user];
+  if(!account||account.hash!==await digest(account.salt+pass)){$('#auth-status').textContent='아이디 또는 비밀번호가 맞지 않아.';return}
+  $('#auth-status').textContent='로그인됐어. 수학 탐구를 시작해 보자.';
+  $('#auth').classList.remove('open');$('#intro').classList.add('hide');
+ }
+});
+
 try{compile();setMode('diff')}catch(e){$('#error').textContent='수식 계산 라이브러리를 불러오지 못했어. 인터넷 연결을 확인해 줘.'}
 </script></body></html>
