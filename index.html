@@ -72,6 +72,18 @@ footer{padding:14px;color:#697586;background:#f7f8fa}
 @media(min-width:900px){.layout{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(280px,.8fr);align-items:start}.layout>.panel:first-child{min-width:0}.layout>.panel:last-child{border-left:1px solid #e5e7eb;border-top:0;min-height:400px}#graph-wrap{height:min(68vh,720px)}}
 @media(max-width:600px){header{padding:7px 10px}.tabs{top:90px}.tabs button{font-size:12px;padding:7px 10px}#graph-wrap{height:48vh;min-height:290px}.metrics{gap:5px}.metric{padding:7px}#surface-wrap{height:62vh;min-height:340px}.orbit-pad button{width:35px;height:35px}}
 
+
+.expression-shelf{background:#fff;border-top:1px solid #dfe3e8;border-bottom:1px solid #dfe3e8;padding:8px 10px}
+.expression-line{display:flex;align-items:center;gap:9px;min-height:52px}
+.expression-index{align-self:stretch;display:grid;place-items:center;width:34px;flex:0 0 34px;margin:-8px 0 -8px -10px;background:#3478d4;color:white;font-size:14px}
+.expression-line .inputbox{flex:1;min-width:0;background:#fff;border:0;padding:0;margin:0;gap:7px}
+.expression-line .inputbox label{display:none}
+.expression-line math-field{min-width:0;background:#fff;color:#20242b;border:0;border-radius:0;padding:7px 5px;font-size:21px;box-shadow:none}
+.expression-line .inputbox button{padding:7px 10px}
+.expression-shelf .examples{display:flex;margin:7px 0 0 43px;gap:5px;overflow-x:auto;flex-wrap:nowrap}
+.expression-shelf .examples button{white-space:nowrap;background:#f4f6f8;color:#526174;border:1px solid #dfe3e8;border-radius:4px}
+@media(max-width:600px){.expression-shelf{padding:7px 9px}.expression-line{min-height:47px}.expression-index{margin:-7px 0 -7px -9px}.expression-line math-field{font-size:19px}.expression-shelf .examples{margin-left:40px}}
+
 </style></head><body>
 <div id="intro"><div class="intro-inner"><div class="intro-kicker">VISUAL MATHEMATICS LAB</div><h1>미적분 탐구실</h1><p class="intro-sub">중앙의 수학 원판을 눌러 원하는 도구를 선택해.</p><div class="formula-rain" aria-hidden="true"><span style="--x:8%;--y:12%;--delay:0s">limₕ→₀</span><span style="--x:65%;--y:20%;--delay:.7s">∫ₐᵇ f(x)dx</span><span style="--x:28%;--y:62%;--delay:1.4s">d/dx xⁿ</span><span style="--x:76%;--y:65%;--delay:2.1s">∇f(x,y,z)</span></div><button class="math-disc" id="math-disc" aria-label="수학 메뉴 열기"><span>d/dx</span><i>∫</i></button><div class="hub-menu" id="hub-menu"><button data-dest="calculator">함수 계산기</button><button data-dest="integral">적분 원리</button><button data-dest="derivative">미분 원리</button><button data-dest="3d">삼차원 함수 계산기</button></div><div class="intro-links" id="intro-account">로그인이 필요해? <button id="open-signup">회원가입</button> · <button id="open-login">로그인</button></div></div></div>
 <div id="auth"><div class="auth-card"><h2 id="auth-title">회원가입</h2><p>이 브라우저에서만 사용하는 체험용 계정이야.</p><input id="auth-user" maxlength="24" placeholder="아이디 (영문·숫자 3~24자)" autocomplete="username"><input id="auth-pass" type="password" minlength="6" placeholder="비밀번호 (6자 이상)" autocomplete="current-password"><div class="auth-status" id="auth-status"></div><div class="auth-actions"><button id="auth-submit">가입하기</button><button class="secondary" id="auth-switch">로그인으로</button><button class="secondary" id="auth-close">닫기</button></div><p class="auth-note">체험용 로그인 정보는 현재 브라우저에만 저장돼. 실제 서비스 계정이나 안전한 서버 인증은 아니며, 다른 기기와 동기화되지 않아.</p></div></div>
@@ -82,6 +94,12 @@ footer{padding:14px;color:#697586;background:#f7f8fa}
 <aside class="panel"><h2 id="sideTitle">미분의 원리</h2><div id="explain" class="explain"></div><div id="steps"></div></aside></div></main><section id="threeD"><div class="panel"><h2>삼차원 함수 계산기</h2><p class="hint">z = f(x,y) 형태의 함수를 입력해 표면 그래프를 확인해 봐. 예: x^2+y^2, sin(x)*cos(y), x*y</p><div class="three-controls"><input id="expr3d" value="x^2+y^2" aria-label="삼차원 함수 입력"><button id="apply3d">그래프 그리기</button></div><div class="graph-wrap" id="surface-wrap"><div class="graph-toolbar"><button type="button" id="surface-zoom-in">+</button><button type="button" id="surface-zoom-out">−</button><button type="button" id="surface-reset">⌂</button></div><div class="orbit-pad" aria-label="3차원 그래프 회전"><button data-orbit="up" aria-label="위로 회전">↑</button><div><button data-orbit="left" aria-label="왼쪽으로 회전">←</button><button data-orbit="down" aria-label="아래로 회전">↓</button><button data-orbit="right" aria-label="오른쪽으로 회전">→</button></div></div><canvas id="surface3d" width="900" height="560" aria-label="삼차원 함수 표면 그래프"></canvas></div><div class="three-controls"><label class="hint">표시 범위 <input id="range3d" type="range" min="2" max="8" step="1" value="4"></label><span class="hint" id="range3d-label">±4</span></div><div class="hint" id="error3d"></div></div></section><footer>수식 계산은 Nerdamer 기반이야. 그래프와 넓이는 개념을 보여주기 위한 수치 근사이며, 적분상수 C는 별도로 표시해.</footer>
 <script>
 const $=s=>document.querySelector(s);let mode='diff',expr='x^2',f=null,df=null,anti=null;
+const equationEditor=document.querySelector('header .inputbox'),exampleRow=document.querySelector('header .examples');
+const graphSection=document.querySelector('.layout>.panel:first-child');
+const expressionShelf=document.createElement('div');expressionShelf.className='expression-shelf';
+const expressionLine=document.createElement('div');expressionLine.className='expression-line';
+const expressionIndex=document.createElement('span');expressionIndex.className='expression-index';expressionIndex.textContent='1';
+expressionLine.append(expressionIndex,equationEditor);expressionShelf.append(expressionLine,exampleRow);graphSection.querySelector('#graph-wrap').after(expressionShelf);
 const fmt=n=>Number.isFinite(n)?(Math.abs(n)<.0005?'0':n.toFixed(4)):'정의되지 않음';
 const clean=s=>String(s).replace(/\s+/g,'');
 function compile(){
