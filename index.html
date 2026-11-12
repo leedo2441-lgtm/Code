@@ -17,6 +17,61 @@ body:after{background-size:760px 760px;background-image:radial-gradient(2px 2px 
 .inputbox math-field{flex:1;min-width:190px;display:block;background:#080f1c;border:1px solid #344762;border-radius:10px;color:white;padding:11px 13px;font-size:21px;--caret-color:#76a9ff;--selection-background-color:#254a78;--contains-highlight-background-color:#172a45}
 math-field::part(virtual-keyboard-toggle){display:none}
 @media(max-width:600px){.formula-rain{height:125px}.auth-card{padding:19px}}
+
+/* Calculator-app redesign: graph-first, clean Desmos-inspired workspace */
+:root{color-scheme:light;--bg:#f4f5f7;--panel:#fff;--line:#d8dce2;--muted:#667085;--text:#20242b;--blue:#2878d0;--cyan:#159c91;--orange:#e58a25}
+body{background:#f4f5f7;color:#20242b;font-family:Arial,"Noto Sans KR",sans-serif;line-height:1.45}
+body:before,body:after{display:none}
+header,main,footer{max-width:none;padding-left:0;padding-right:0}
+header{position:sticky;top:0;z-index:90;padding:8px 14px 10px;background:#292929;color:#f5f5f5;box-shadow:0 2px 7px #0002}
+header .eyebrow,header>p,.examples,.error{display:none}
+header h1{font-size:17px;letter-spacing:0;margin:0 0 7px;font-weight:600}
+.inputbox{margin:0;padding:0;border:0;border-radius:0;background:transparent;gap:8px}
+.inputbox label{color:#ddd;font-size:14px}
+.inputbox math-field{background:#fff;color:#222;border:1px solid #cbd2dc;border-radius:5px;padding:5px 8px;font-size:19px;min-height:39px}
+.inputbox button{background:#3a78c2;border:0;border-radius:5px;padding:8px 12px;color:white}
+.account-bar{background:#292929;color:#eee!important;max-width:none!important;margin:0!important;padding:6px 12px!important}
+.account-bar button{color:#fff;border-color:#777}
+main{display:flex;flex-direction:column;gap:0}
+.tabs{order:0;position:sticky;top:94px;z-index:80;margin:0;padding:6px 8px;background:#353535;border:0;gap:5px;flex-wrap:nowrap;overflow-x:auto}
+.tabs button{flex:1;min-width:max-content;background:#444;color:#eee;border:0;border-radius:4px;padding:8px 12px;font-size:13px}
+.tabs button.active{background:#2678d0;color:white}
+.layout{display:flex;flex-direction:column;gap:0}
+.layout>.panel:first-child{order:0;border:0;border-radius:0;padding:0;background:#fff}
+.layout>.panel:last-child{order:1;border:0;border-top:1px solid #ddd;border-radius:0;background:#fff;padding:14px;color:#30343b}
+.panel h2{font-size:14px;margin:0;padding:8px 12px;color:#30343b;font-weight:600}
+.graph-wrap{border:0;border-radius:0;background:#fff;overflow:hidden;touch-action:none}
+#graph-wrap{height: min(56vh,540px);min-height:320px}
+#graph-wrap svg{height:100%;width:100%;background:#fff}
+.graph-toolbar{top:10px;right:10px;gap:4px}
+.graph-toolbar button{background:#f7f7f7;color:#555;border:1px solid #d4d7dc;box-shadow:0 1px 3px #0002;border-radius:6px}
+.graph-readout{background:#ffffffd9;color:#667085;border:1px solid #e3e5e8}
+.controls{padding:8px 13px;margin:0;border-top:1px solid #eceef1;color:#333}
+.controls label{color:#555}
+input[type=range]{accent-color:#2878d0}
+.metrics{padding:8px 12px;margin:0;grid-template-columns:repeat(2,minmax(0,1fr));background:#fafafa}
+.metric{background:white;border:1px solid #e2e5e9;border-radius:5px}
+.metric small{color:#667085}.metric strong{color:#2878d0;font-size:15px}
+#sideTitle{background:#f5f6f8}
+.explain,.step{color:#3d4652}.step{background:#f5f8fc;border-left-color:#2878d0}
+.formula{background:#f6f8fb;color:#26384e;border-color:#e0e5ec}
+#threeD{max-width:none;margin:0;padding:0;background:#fff}
+#threeD>.panel{border:0;border-radius:0;background:#fff;padding:0;margin:0}
+#threeD .panel>h2,#threeD .panel>p{padding:10px 13px;margin:0}
+.three-controls{padding:7px 12px;margin:0;border-top:1px solid #e5e7eb}
+.three-controls input{background:white;color:#20242b;border-color:#d5d9df;border-radius:5px}
+.three-controls button{background:#2878d0;border:0;border-radius:5px}
+#surface-wrap{position:relative;height:min(68vh,680px);min-height:380px;background:#fff;border-top:1px solid #ddd;border-bottom:1px solid #ddd}
+#surface3d{width:100%;height:100%;background:#fff;border-radius:0;cursor:grab}
+#surface-wrap .graph-toolbar button{background:#f7f7f7;color:#555}
+.orbit-pad{position:absolute;z-index:5;left:12px;bottom:14px;display:flex;flex-direction:column;align-items:center;gap:3px}
+.orbit-pad>div{display:flex;gap:3px}
+.orbit-pad button{width:38px;height:38px;border:1px solid #cfd4dc;border-radius:7px;background:#fffffff0;color:#3d4652;font-size:20px;box-shadow:0 1px 4px #0002;touch-action:manipulation}
+#range3d{accent-color:#2878d0}
+footer{padding:14px;color:#697586;background:#f7f8fa}
+@media(min-width:900px){.layout{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(280px,.8fr);align-items:start}.layout>.panel:first-child{min-width:0}.layout>.panel:last-child{border-left:1px solid #e5e7eb;border-top:0;min-height:400px}#graph-wrap{height:min(68vh,720px)}}
+@media(max-width:600px){header{padding:7px 10px}.tabs{top:90px}.tabs button{font-size:12px;padding:7px 10px}#graph-wrap{height:48vh;min-height:290px}.metrics{gap:5px}.metric{padding:7px}#surface-wrap{height:62vh;min-height:340px}.orbit-pad button{width:35px;height:35px}}
+
 </style></head><body>
 <div id="intro"><div class="intro-inner"><div class="intro-kicker">VISUAL MATHEMATICS LAB</div><h1>미적분 탐구실</h1><p class="intro-sub">중앙의 수학 원판을 눌러 원하는 도구를 선택해.</p><div class="formula-rain" aria-hidden="true"><span style="--x:8%;--y:12%;--delay:0s">limₕ→₀</span><span style="--x:65%;--y:20%;--delay:.7s">∫ₐᵇ f(x)dx</span><span style="--x:28%;--y:62%;--delay:1.4s">d/dx xⁿ</span><span style="--x:76%;--y:65%;--delay:2.1s">∇f(x,y,z)</span></div><button class="math-disc" id="math-disc" aria-label="수학 메뉴 열기"><span>d/dx</span><i>∫</i></button><div class="hub-menu" id="hub-menu"><button data-dest="calculator">함수 계산기</button><button data-dest="integral">적분 원리</button><button data-dest="derivative">미분 원리</button><button data-dest="3d">삼차원 함수 계산기</button></div><div class="intro-links" id="intro-account">로그인이 필요해? <button id="open-signup">회원가입</button> · <button id="open-login">로그인</button></div></div></div>
 <div id="auth"><div class="auth-card"><h2 id="auth-title">회원가입</h2><p>이 브라우저에서만 사용하는 체험용 계정이야.</p><input id="auth-user" maxlength="24" placeholder="아이디 (영문·숫자 3~24자)" autocomplete="username"><input id="auth-pass" type="password" minlength="6" placeholder="비밀번호 (6자 이상)" autocomplete="current-password"><div class="auth-status" id="auth-status"></div><div class="auth-actions"><button id="auth-submit">가입하기</button><button class="secondary" id="auth-switch">로그인으로</button><button class="secondary" id="auth-close">닫기</button></div><p class="auth-note">체험용 로그인 정보는 현재 브라우저에만 저장돼. 실제 서비스 계정이나 안전한 서버 인증은 아니며, 다른 기기와 동기화되지 않아.</p></div></div>
@@ -24,7 +79,7 @@ math-field::part(virtual-keyboard-toggle){display:none}
 <div class="inputbox"><label>f(x) =</label><math-field id="expr" aria-label="LaTeX 수식 입력" math-virtual-keyboard-policy="auto">x^2</math-field><button id="apply">수식 적용</button></div><div class="examples"><span class="hint">예시:</span><button data-ex="x^2">x^2</button><button data-ex="x^3-2*x">x^3-2x</button><button data-ex="sin(x)">sin(x)</button><button data-ex="x^2+3*x+1">x^2+3x+1</button><button data-ex="1/x">1/x</button></div><div id="error" class="error"></div></header>
 <div class="account-bar" id="account-bar" style="max-width:1200px;padding:8px 22px"><span id="account-label"></span><button id="logout">로그아웃</button><button id="home-return">홈</button></div><main><nav class="tabs"><button class="active" data-mode="diff">미분이 왜 이렇게 될까?</button><button data-mode="int">적분은 왜 이렇게 될까?</button><button data-mode="both">함수 그래프</button></nav>
 <div class="layout"><section class="panel"><h2 id="graphTitle">접선의 기울기 변화</h2><div class="graph-wrap" id="graph-wrap"><div class="graph-toolbar"><button type="button" id="zoom-in">+</button><button type="button" id="zoom-out">−</button><button type="button" id="zoom-reset">⌂</button></div><div class="graph-readout" id="graph-readout">x: −10 ~ 10 · y: −10 ~ 10</div><svg id="plot" viewBox="0 0 720 560" role="img" aria-label="확대·축소 및 이동 가능한 함수 그래프"></svg></div><div class="controls"><label for="xval" id="xlabel">관찰 위치 x = 1.00</label><input id="xval" type="range" min="-3" max="3" step=".01" value="1"></div><div class="controls" id="ncontrols"><label for="nval">적분 구간 분할</label><input id="nval" type="range" min="4" max="80" step="1" value="20"><span id="nlabel" class="hint">20개</span></div><div class="metrics" id="metrics"></div></section>
-<aside class="panel"><h2 id="sideTitle">미분의 원리</h2><div id="explain" class="explain"></div><div id="steps"></div></aside></div></main><section id="threeD"><div class="panel"><h2>삼차원 함수 계산기</h2><p class="hint">z = f(x,y) 형태의 함수를 입력해 표면 그래프를 확인해 봐. 예: x^2+y^2, sin(x)*cos(y), x*y</p><div class="three-controls"><input id="expr3d" value="x^2+y^2" aria-label="삼차원 함수 입력"><button id="apply3d">그래프 그리기</button></div><div class="graph-wrap" id="surface-wrap"><div class="graph-toolbar"><button type="button" id="surface-zoom-in">+</button><button type="button" id="surface-zoom-out">−</button><button type="button" id="surface-reset">⌂</button></div><canvas id="surface3d" width="900" height="560" aria-label="삼차원 함수 표면 그래프"></canvas></div><div class="three-controls"><label class="hint">표시 범위 <input id="range3d" type="range" min="2" max="8" step="1" value="4"></label><span class="hint" id="range3d-label">±4</span></div><div class="hint" id="error3d"></div></div></section><footer>수식 계산은 Nerdamer 기반이야. 그래프와 넓이는 개념을 보여주기 위한 수치 근사이며, 적분상수 C는 별도로 표시해.</footer>
+<aside class="panel"><h2 id="sideTitle">미분의 원리</h2><div id="explain" class="explain"></div><div id="steps"></div></aside></div></main><section id="threeD"><div class="panel"><h2>삼차원 함수 계산기</h2><p class="hint">z = f(x,y) 형태의 함수를 입력해 표면 그래프를 확인해 봐. 예: x^2+y^2, sin(x)*cos(y), x*y</p><div class="three-controls"><input id="expr3d" value="x^2+y^2" aria-label="삼차원 함수 입력"><button id="apply3d">그래프 그리기</button></div><div class="graph-wrap" id="surface-wrap"><div class="graph-toolbar"><button type="button" id="surface-zoom-in">+</button><button type="button" id="surface-zoom-out">−</button><button type="button" id="surface-reset">⌂</button></div><div class="orbit-pad" aria-label="3차원 그래프 회전"><button data-orbit="up" aria-label="위로 회전">↑</button><div><button data-orbit="left" aria-label="왼쪽으로 회전">←</button><button data-orbit="down" aria-label="아래로 회전">↓</button><button data-orbit="right" aria-label="오른쪽으로 회전">→</button></div></div><canvas id="surface3d" width="900" height="560" aria-label="삼차원 함수 표면 그래프"></canvas></div><div class="three-controls"><label class="hint">표시 범위 <input id="range3d" type="range" min="2" max="8" step="1" value="4"></label><span class="hint" id="range3d-label">±4</span></div><div class="hint" id="error3d"></div></div></section><footer>수식 계산은 Nerdamer 기반이야. 그래프와 넓이는 개념을 보여주기 위한 수치 근사이며, 적분상수 C는 별도로 표시해.</footer>
 <script>
 const $=s=>document.querySelector(s);let mode='diff',expr='x^2',f=null,df=null,anti=null;
 const fmt=n=>Number.isFinite(n)?(Math.abs(n)<.0005?'0':n.toFixed(4)):'정의되지 않음';
@@ -128,11 +183,11 @@ $('#auth-submit').addEventListener('click',async()=>{
  }
 });
 
-let fn3d=null,range3d=4,rot3d=0;function draw3d(){const canvas=$('#surface3d'),ctx=canvas.getContext('2d'),w=canvas.width,h=canvas.height;ctx.clearRect(0,0,w,h);if(!fn3d){ctx.fillStyle='#8292ad';ctx.font='18px sans-serif';ctx.fillText('함수를 입력하고 그래프 그리기를 눌러 줘.',25,35);return}const project=(x,y,z)=>{const a=(x-y)*Math.cos(rot3d)-(x+y)*Math.sin(rot3d),b=(x+y)*Math.cos(rot3d)+(x-y)*Math.sin(rot3d);return {x:w/2+a*55,y:h*.58+b*25-z*23}};ctx.strokeStyle='#29405f';ctx.lineWidth=1;for(let i=0;i<=24;i++){let q=-range3d+2*range3d*i/24;for(let axis=0;axis<2;axis++){ctx.beginPath();for(let j=0;j<=50;j++){let t=-range3d+2*range3d*j/50,x=axis===0?q:t,y=axis===0?t:q,z;try{z=fn3d(x,y)}catch(e){z=NaN}if(!Number.isFinite(z)||Math.abs(z)>30){continue}const p=project(x,y,z);if(j===0)ctx.moveTo(p.x,p.y);else ctx.lineTo(p.x,p.y)}ctx.stroke()}}ctx.fillStyle='#9aacc5';ctx.font='15px sans-serif';ctx.fillText('z = '+$('#expr3d').value,18,25)}
+let fn3d=null,range3d=4,rot3d=0,pitch3d=-.42;function draw3d(){const canvas=$('#surface3d'),ctx=canvas.getContext('2d'),w=canvas.width,h=canvas.height;ctx.clearRect(0,0,w,h);if(!fn3d){ctx.fillStyle='#8292ad';ctx.font='18px sans-serif';ctx.fillText('함수를 입력하고 그래프 그리기를 눌러 줘.',25,35);return}const project=(x,y,z)=>{const a=x*Math.cos(rot3d)-y*Math.sin(rot3d),b=x*Math.sin(rot3d)+y*Math.cos(rot3d),v=b*Math.cos(pitch3d)-z*Math.sin(pitch3d),depth=b*Math.sin(pitch3d)+z*Math.cos(pitch3d);return {x:w/2+(a-v)*47,y:h*.57+(a+v)*22-depth*25}};ctx.strokeStyle='#aeb8c5';ctx.lineWidth=1;for(let i=0;i<=24;i++){let q=-range3d+2*range3d*i/24;for(let axis=0;axis<2;axis++){ctx.beginPath();for(let j=0;j<=50;j++){let t=-range3d+2*range3d*j/50,x=axis===0?q:t,y=axis===0?t:q,z;try{z=fn3d(x,y)}catch(e){z=NaN}if(!Number.isFinite(z)||Math.abs(z)>30){continue}const p=project(x,y,z);if(j===0)ctx.moveTo(p.x,p.y);else ctx.lineTo(p.x,p.y)}ctx.stroke()}}ctx.fillStyle='#4b5563';ctx.font='15px sans-serif';ctx.fillText('z = '+$('#expr3d').value,18,25)}
 function compile3d(){try{const raw=nerdamer.convertFromLaTeX($('#expr3d').value).toString();fn3d=nerdamer(raw).buildFunction(['x','y']);$('#error3d').textContent='';draw3d()}catch(e){$('#error3d').textContent='수식을 해석하지 못했어. 예: x^2+y^2';fn3d=null;draw3d()}}
 function change3dZoom(delta){range3d=Math.max(2,Math.min(8,range3d+delta));$('#range3d').value=range3d;$('#range3d-label').textContent='±'+range3d;draw3d()}
-$('#surface-zoom-in').addEventListener('click',()=>change3dZoom(-1));$('#surface-zoom-out').addEventListener('click',()=>change3dZoom(1));$('#surface-reset').addEventListener('click',()=>{rot3d=0;change3dZoom(4-range3d)});
-$('#surface-wrap').addEventListener('wheel',e=>{e.preventDefault();change3dZoom(e.deltaY>0?1:-1)},{passive:false});let surfaceDrag=null;$('#surface-wrap').addEventListener('pointerdown',e=>{if(e.target.closest('.graph-toolbar'))return;surfaceDrag={x:e.clientX,rotation:rot3d};e.currentTarget.setPointerCapture(e.pointerId)});$('#surface-wrap').addEventListener('pointermove',e=>{if(!surfaceDrag)return;rot3d=surfaceDrag.rotation+(e.clientX-surfaceDrag.x)*.008;draw3d()});$('#surface-wrap').addEventListener('pointerup',()=>surfaceDrag=null);$('#surface-wrap').addEventListener('pointercancel',()=>surfaceDrag=null);
+$('#surface-zoom-in').addEventListener('click',()=>change3dZoom(-1));$('#surface-zoom-out').addEventListener('click',()=>change3dZoom(1));$('#surface-reset').addEventListener('click',()=>{rot3d=0;pitch3d=-.42;change3dZoom(4-range3d)});
+$('#surface-wrap').addEventListener('wheel',e=>{e.preventDefault();change3dZoom(e.deltaY>0?1:-1)},{passive:false});let surfaceDrag=null;$('#surface-wrap').addEventListener('pointerdown',e=>{if(e.target.closest('.graph-toolbar,.orbit-pad'))return;surfaceDrag={x:e.clientX,y:e.clientY,yaw:rot3d,pitch:pitch3d};e.currentTarget.setPointerCapture(e.pointerId)});$('#surface-wrap').addEventListener('pointermove',e=>{if(!surfaceDrag)return;rot3d=surfaceDrag.yaw+(e.clientX-surfaceDrag.x)*.008;pitch3d=Math.max(-1.48,Math.min(1.48,surfaceDrag.pitch+(e.clientY-surfaceDrag.y)*.008));draw3d()});$('#surface-wrap').addEventListener('pointerup',()=>surfaceDrag=null);$('#surface-wrap').addEventListener('pointercancel',()=>surfaceDrag=null);document.querySelectorAll('[data-orbit]').forEach(btn=>btn.addEventListener('click',()=>{const d=btn.dataset.orbit;if(d==='left')rot3d-=.16;if(d==='right')rot3d+=.16;if(d==='up')pitch3d=Math.max(-1.48,pitch3d-.14);if(d==='down')pitch3d=Math.min(1.48,pitch3d+.14);draw3d()}));
 $('#apply3d').addEventListener('click',compile3d);$('#range3d').addEventListener('input',e=>{range3d=+e.target.value;$('#range3d-label').textContent='±'+range3d;draw3d()});
 try{compile();setMode('diff');compile3d()}catch(e){$('#error').textContent='수식 계산 라이브러리를 불러오지 못했어. 인터넷 연결을 확인해 줘.'}
 </script></body></html>
