@@ -318,7 +318,7 @@ let fn3d=null,range3d=4,rot3d=0,pitch3d=-.42;
 function draw3d(){
  const canvas=$('#surface3d'),ctx=canvas.getContext('2d'),w=canvas.width,h=canvas.height;
  ctx.clearRect(0,0,w,h);ctx.fillStyle='#fff';ctx.fillRect(0,0,w,h);
- const project=(x,y,z)=>{const a=x*Math.cos(rot3d)-y*Math.sin(rot3d),b=x*Math.sin(rot3d)+y*Math.cos(rot3d),v=b*Math.cos(pitch3d)-z*Math.sin(pitch3d),depth=b*Math.sin(pitch3d)+z*Math.cos(pitch3d);return {x:w/2+(a-v)*47,y:h*.57+(a+v)*22-depth*25}};
+ const project=(x,y,z)=>{const a=x*Math.cos(rot3d)-y*Math.sin(rot3d),b=x*Math.sin(rot3d)+y*Math.cos(rot3d),tilt=Math.cos(pitch3d);return {x:w/2+(a-b*tilt)*47,y:h*.57+(a+b*tilt)*22-z*25}};
  const line3=(p1,p2,color,width=2)=>{ctx.beginPath();ctx.moveTo(p1.x,p1.y);ctx.lineTo(p2.x,p2.y);ctx.strokeStyle=color;ctx.lineWidth=width;ctx.stroke()};
  // Coordinate axes and grid: x, y, and the vertical z-axis are always drawn.
  for(let q=-range3d;q<=range3d+.001;q+=1){
