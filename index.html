@@ -84,12 +84,27 @@ footer{padding:14px;color:#697586;background:#f7f8fa}
 .expression-shelf .examples button{white-space:nowrap;background:#f4f6f8;color:#526174;border:1px solid #dfe3e8;border-radius:4px}
 @media(max-width:600px){.expression-shelf{padding:7px 9px}.expression-line{min-height:47px}.expression-index{margin:-7px 0 -7px -9px}.expression-line math-field{font-size:19px}.expression-shelf .examples{margin-left:40px}}
 
+
+/* Function / derivative correspondence workspace */
+#derivative-compare{display:none;background:#fff;border-top:1px solid #e3e7ec;padding:10px 12px 12px}
+#derivative-compare.visible{display:block}
+.compare-heading{display:flex;justify-content:space-between;align-items:center;gap:8px;color:#475467;font-size:13px;font-weight:650;margin:0 0 5px}
+.compare-heading span{font-weight:400;color:#667085;font-size:11px}
+#derivative-plot{width:100%;height:auto;display:block;touch-action:none}
+.correspondence{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;padding:10px 12px;background:#f8fafc;border-top:1px solid #e5e7eb}
+.correspondence-card{border:1px solid #e2e7ee;border-radius:6px;padding:8px 10px;min-width:0}
+.correspondence-card small{display:block;color:#667085;font-size:11px}
+.correspondence-card strong{display:block;color:#26384e;font-size:13px;overflow-wrap:anywhere}
+.monotonic-list{padding:9px 12px;border-top:1px solid #e5e7eb;color:#475467;font-size:12px;line-height:1.8}
+.monotonic-list b{color:#2878d0}
+@media(max-width:600px){.correspondence{gap:5px;padding:8px}.correspondence-card{padding:7px}.monotonic-list{font-size:11px}}
+
 </style></head><body>
 <div id="intro"><div class="intro-inner"><div class="intro-kicker">VISUAL MATHEMATICS LAB</div><h1>미적분 탐구실</h1><p class="intro-sub">중앙의 수학 원판을 눌러 원하는 도구를 선택해.</p><div class="formula-rain" aria-hidden="true"><span style="--x:8%;--y:12%;--delay:0s">limₕ→₀</span><span style="--x:65%;--y:20%;--delay:.7s">∫ₐᵇ f(x)dx</span><span style="--x:28%;--y:62%;--delay:1.4s">d/dx xⁿ</span><span style="--x:76%;--y:65%;--delay:2.1s">∇f(x,y,z)</span></div><button class="math-disc" id="math-disc" aria-label="수학 메뉴 열기"><span>d/dx</span><i>∫</i></button><div class="hub-menu" id="hub-menu"><button data-dest="calculator">함수 계산기</button><button data-dest="integral">적분 원리</button><button data-dest="derivative">미분 원리</button><button data-dest="3d">삼차원 함수 계산기</button></div><div class="intro-links" id="intro-account">로그인이 필요해? <button id="open-signup">회원가입</button> · <button id="open-login">로그인</button></div></div></div>
 <div id="auth"><div class="auth-card"><h2 id="auth-title">회원가입</h2><p>이 브라우저에서만 사용하는 체험용 계정이야.</p><input id="auth-user" maxlength="24" placeholder="아이디 (영문·숫자 3~24자)" autocomplete="username"><input id="auth-pass" type="password" minlength="6" placeholder="비밀번호 (6자 이상)" autocomplete="current-password"><div class="auth-status" id="auth-status"></div><div class="auth-actions"><button id="auth-submit">가입하기</button><button class="secondary" id="auth-switch">로그인으로</button><button class="secondary" id="auth-close">닫기</button></div><p class="auth-note">체험용 로그인 정보는 현재 브라우저에만 저장돼. 실제 서비스 계정이나 안전한 서버 인증은 아니며, 다른 기기와 동기화되지 않아.</p></div></div>
 <header><div class="eyebrow">VISUAL MATHEMATICS LAB · 02</div><h1>미적분 수식 탐구실</h1><p>함수를 입력하면 그래프와 미분·적분 결과가 즉시 나타나. 결과만 보여주는 게 아니라, 그 결과가 나오는 원리를 단계별로 확인해 보자.</p>
 <div class="inputbox"><label>f(x) =</label><math-field id="expr" aria-label="LaTeX 수식 입력" math-virtual-keyboard-policy="auto">x^2</math-field><button id="apply">수식 적용</button></div><div class="examples"><span class="hint">예시:</span><button data-ex="x^2">x^2</button><button data-ex="x^3-2*x">x^3-2x</button><button data-ex="sin(x)">sin(x)</button><button data-ex="x^2+3*x+1">x^2+3x+1</button><button data-ex="1/x">1/x</button></div><div id="error" class="error"></div></header>
-<div class="account-bar" id="account-bar" style="max-width:1200px;padding:8px 22px"><span id="account-label"></span><button id="logout">로그아웃</button><button id="home-return">홈</button></div><main><nav class="tabs"><button class="active" data-mode="diff">미분이 왜 이렇게 될까?</button><button data-mode="int">적분은 왜 이렇게 될까?</button><button data-mode="both">함수 그래프</button></nav>
+<div class="account-bar" id="account-bar" style="max-width:1200px;padding:8px 22px"><span id="account-label"></span><button id="logout">로그아웃</button><button id="home-return">홈</button></div><main><nav class="tabs"><button class="active" data-mode="diff">미분이 왜 이렇게 될까?</button><button data-mode="int">적분은 왜 이렇게 될까?</button><button data-mode="both">함수·도함수 대응</button></nav>
 <div class="layout"><section class="panel"><h2 id="graphTitle">접선의 기울기 변화</h2><div class="graph-wrap" id="graph-wrap"><div class="graph-toolbar"><button type="button" id="zoom-in">+</button><button type="button" id="zoom-out">−</button><button type="button" id="zoom-reset">⌂</button></div><div class="graph-readout" id="graph-readout">x: −10 ~ 10 · y: −10 ~ 10</div><svg id="plot" viewBox="0 0 720 560" role="img" aria-label="확대·축소 및 이동 가능한 함수 그래프"></svg></div><div class="controls"><label for="xval" id="xlabel">관찰 위치 x = 1.00</label><input id="xval" type="range" min="-3" max="3" step=".01" value="1"></div><div class="controls" id="ncontrols"><label for="nval">적분 구간 분할</label><input id="nval" type="range" min="4" max="80" step="1" value="20"><span id="nlabel" class="hint">20개</span></div><div class="metrics" id="metrics"></div></section>
 <aside class="panel"><h2 id="sideTitle">미분의 원리</h2><div id="explain" class="explain"></div><div id="steps"></div></aside></div></main><section id="threeD"><div class="panel"><h2>삼차원 함수 계산기</h2><p class="hint">z = f(x,y) 형태의 함수를 입력해 표면 그래프를 확인해 봐. 예: x^2+y^2, sin(x)*cos(y), x*y</p><div class="three-controls"><input id="expr3d" value="x^2+y^2" aria-label="삼차원 함수 입력"><button id="apply3d">그래프 그리기</button></div><div class="graph-wrap" id="surface-wrap"><div class="graph-toolbar"><button type="button" id="surface-zoom-in">+</button><button type="button" id="surface-zoom-out">−</button><button type="button" id="surface-reset">⌂</button></div><div class="orbit-pad" aria-label="3차원 그래프 회전"><button data-orbit="up" aria-label="위로 회전">↑</button><div><button data-orbit="left" aria-label="왼쪽으로 회전">←</button><button data-orbit="down" aria-label="아래로 회전">↓</button><button data-orbit="right" aria-label="오른쪽으로 회전">→</button></div></div><canvas id="surface3d" width="900" height="560" aria-label="삼차원 함수 표면 그래프"></canvas></div><div class="three-controls"><label class="hint">표시 범위 <input id="range3d" type="range" min="2" max="8" step="1" value="4"></label><span class="hint" id="range3d-label">±4</span></div><div class="hint" id="error3d"></div></div></section><footer>수식 계산은 Nerdamer 기반이야. 그래프와 넓이는 개념을 보여주기 위한 수치 근사이며, 적분상수 C는 별도로 표시해.</footer>
 <script>
@@ -99,7 +114,12 @@ const graphSection=document.querySelector('.layout>.panel:first-child');
 const expressionShelf=document.createElement('div');expressionShelf.className='expression-shelf';
 const expressionLine=document.createElement('div');expressionLine.className='expression-line';
 const expressionIndex=document.createElement('span');expressionIndex.className='expression-index';expressionIndex.textContent='1';
-expressionLine.append(expressionIndex,equationEditor);expressionShelf.append(expressionLine,exampleRow);graphSection.querySelector('#graph-wrap').after(expressionShelf);
+expressionLine.append(expressionIndex,equationEditor);expressionShelf.append(expressionLine,exampleRow);
+graphSection.querySelector('#graph-wrap').after(expressionShelf);
+const compare=document.createElement('section');compare.id='derivative-compare';
+compare.innerHTML='<div class="compare-heading">도함수 f′(x) 그래프 <span>위 그래프와 같은 x축 범위</span></div><svg id="derivative-plot" viewBox="0 0 720 260" role="img" aria-label="도함수 그래프"></svg><div class="correspondence" id="correspondence-cards"></div><div class="monotonic-list" id="monotonic-list"></div>';
+expressionShelf.after(compare);
+
 const fmt=n=>Number.isFinite(n)?(Math.abs(n)<.0005?'0':n.toFixed(4)):'정의되지 않음';
 const clean=s=>String(s).replace(/\s+/g,'');
 function compile(){
@@ -128,12 +148,58 @@ function draw(){
  $('#plot').innerHTML=out+'<text x="'+(W-22)+'" y="'+(H-9)+'" fill="#9aaac2" font-size="12">x</text>';
  $('#xlabel').textContent='관찰 위치 x = '+x.toFixed(2);$('#nlabel').textContent=n+'개';
  const cards=[['함숫값 f(x)',fmt(y)],['도함수 f′(x)',fmt(val(df,x))],['부정적분 F(x)',anti.toString()],['0부터 x까지의 정적분',fmt(area(0,x,n))]];
+ 
  $('#metrics').innerHTML=cards.map(c=>'<div class="metric"><small>'+c[0]+'</small><strong>'+c[1]+'</strong></div>').join('');
+ const showCompare=mode==='both';$('#derivative-compare').classList.toggle('visible',showCompare);
+ if(showCompare)drawDerivativeCompare(x);
+ updateCorrespondence(x,y,slope);
+
 }
 function powerInfo(){
  const s=clean(expr);let m=s.match(/^([+-]?(?:\d+(?:\.\d*)?|\.\d+)?\*?)x(?:\^([+-]?\d+))?$/);
  if(!m)return null;let c=m[1]||'1';c=c.replace('*','');if(c===''||c==='+')c='1';if(c==='-')c='-1';return {c:Number(c),n:m[2]?Number(m[2]):1};
 }
+
+function derivativeSamples(){
+ const vals=[];let maxAbs=0;
+ for(let i=0;i<=500;i++){const xx=xmin+(xmax-xmin)*i/500,v=val(df,xx);vals.push({x:xx,y:v});if(Number.isFinite(v))maxAbs=Math.max(maxAbs,Math.abs(v))}
+ return {vals,scale:Math.max(1,maxAbs*1.12)};
+}
+function drawDerivativeCompare(currentX){
+ const svg=$('#derivative-plot'),W2=720,H2=260,L2=58,R2=22,T2=18,B2=34;
+ const data=derivativeSamples(),lo=-data.scale,hi=data.scale;
+ const px=x=>L2+(x-xmin)/(xmax-xmin)*(W2-L2-R2),py=y=>T2+(hi-y)/(hi-lo)*(H2-T2-B2);
+ let out='';
+ const step=graphGridStep(xmax-xmin);
+ for(let gx=Math.ceil(xmin/step)*step;gx<=xmax+1e-8;gx+=step){out+='<line x1="'+px(gx)+'" y1="'+T2+'" x2="'+px(gx)+'" y2="'+(H2-B2)+'" stroke="#e3e7ec"/><text x="'+px(gx)+'" y="'+(H2-10)+'" fill="#667085" font-size="10" text-anchor="middle">'+Number(gx.toPrecision(4))+'</text>'}
+ out+='<line x1="'+L2+'" y1="'+py(0)+'" x2="'+(W2-R2)+'" y2="'+py(0)+'" stroke="#64748b"/>';
+ let d='',pen=false;
+ for(const p of data.vals){if(!Number.isFinite(p.y)){pen=false;continue}d+=(pen?'L':'M')+px(p.x).toFixed(2)+','+py(p.y).toFixed(2);pen=true}
+ out+='<path d="'+d+'" fill="none" stroke="#e58a25" stroke-width="2.8" stroke-linecap="round"/>';
+ const cv=val(df,currentX);if(Number.isFinite(cv))out+='<line x1="'+px(currentX)+'" y1="'+T2+'" x2="'+px(currentX)+'" y2="'+(H2-B2)+'" stroke="#2878d0" stroke-dasharray="4 4"/><circle cx="'+px(currentX)+'" cy="'+py(cv)+'" r="5" fill="#2878d0" stroke="white" stroke-width="1.5"/>';
+ out+='<text x="12" y="16" fill="#e58a25" font-size="12">f′(x)</text>';
+ svg.innerHTML=out;
+}
+function localTrend(v){if(!Number.isFinite(v))return '도함수가 정의되지 않음';if(v>1e-5)return '증가 중 (f′(x) > 0)';if(v< -1e-5)return '감소 중 (f′(x) < 0)';return '기울기 0에 가까움 (극값 후보)'}
+function trendIntervals(){
+ const N=320,dx=(xmax-xmin)/N,parts=[];let start=xmin,prev=null;
+ for(let i=0;i<=N;i++){const xx=xmin+i*dx,v=val(df,xx),sg=!Number.isFinite(v)?0:(v>1e-5?1:v< -1e-5?-1:0);
+  if(i===0){prev=sg;continue}
+  if(sg!==prev){const mid=(start+xx)/2;if(prev!==0)parts.push({a:start,b:xx,sign:prev});start=xx;prev=sg}
+ }
+ if(prev!==0)parts.push({a:start,b:xmax,sign:prev});
+ return parts.slice(0,8);
+}
+function updateCorrespondence(x,y,slope){
+ const box=$('#correspondence-cards'),list=$('#monotonic-list');
+ if(!box||!list)return;
+ const p=val(f,x),d=val(df,x);
+ const fTrend=localTrend(d),integralTrend=Number.isFinite(p)?(p>1e-5?'누적 적분 F(x)는 증가 (F′=f>0)':p< -1e-5?'누적 적분 F(x)는 감소 (F′=f<0)':'누적 적분의 기울기가 0에 가까움'):'함수값을 계산할 수 없음';
+ box.innerHTML='<div class="correspondence-card"><small>함수 f의 변화</small><strong>'+fTrend+'</strong></div><div class="correspondence-card"><small>누적 적분 F의 변화</small><strong>'+integralTrend+'</strong></div>';
+ const parts=trendIntervals();
+ list.innerHTML='<b>현재 x = '+x.toFixed(2)+'</b> · f′(x) = '+fmt(d)+' → '+fTrend+'<br>'+parts.map(p=>(p.sign>0?'증가':'감소')+' 구간: ['+fmt(p.a)+', '+fmt(p.b)+']').join('　')+'<br><span style="color:#667085">핵심: f′의 부호가 f의 증가·감소를 결정하고, f의 부호가 누적 적분 F의 증가·감소를 결정해.</span>';
+}
+
 function render(){
  const p=powerInfo(),der=nerdamer.diff(expr,'x').toString(),inte=nerdamer.integrate(expr,'x').toString();
  if(mode==='diff'){
@@ -147,8 +213,8 @@ function render(){
   $('#steps').innerHTML='<div class="step">그래프의 색칠된 직사각형 하나하나는 작은 넓이의 근삿값이야.</div><div class="step">분할 개수를 늘리면 직사각형의 폭이 좁아져 곡선 아래 넓이에 가까워져.</div><div class="step">x가 음수이면 적분 방향 때문에 부호가 음수가 될 수 있어.</div>';
  }else{
   $('#graphTitle').textContent='입력한 함수의 전체 그래프';$('#sideTitle').textContent='함수 하나로 미분과 적분 연결하기';
-  $('#explain').innerHTML='<div class="formula">f(x) = '+expr+'<br>f′(x) = '+der+'<br>∫f(x)dx = '+inte+' + C</div><p>같은 함수에서 미분은 순간 변화율을, 적분은 누적된 변화를 나타내. 미분과 적분은 서로 역관계로 연결돼.</p>';
-  $('#steps').innerHTML='<div class="step">미분 탭에서는 접선의 기울기를 확인할 수 있어.</div><div class="step">적분 탭에서는 넓이가 쌓이는 모습을 확인할 수 있어.</div>';
+  $('#explain').innerHTML='<div class="formula">f(x) = '+expr+'<br>f′(x) = '+der+'<br>F′(x) = f(x)</div><p><b>두 그래프를 함께 읽어 봐.</b> 위 파란 그래프는 원래 함수 f(x), 아래 주황 그래프는 도함수 f′(x)야. 같은 x에서 아래 그래프가 양수면 위 함수는 증가하고, 음수면 위 함수는 감소해.</p><div class="step">f′(x) > 0 → f(x) 증가</div><div class="step">f′(x) < 0 → f(x) 감소</div><div class="step">f′(x) = 0 → 접선이 수평인 점(극값 후보)</div><p>적분도 연결돼. F(x)=∫₀ˣ f(t)dt라고 두면 F′(x)=f(x). 따라서 원래 함수 f가 양수인 구간에서 누적 적분 F는 증가하고, f가 음수인 구간에서 감소해.</p>
+  $('#steps').innerHTML='<div class="step">1. 아래 주황색 도함수 그래프가 x축 위에 있으면 원래 함수는 올라가.</div><div class="step">2. 주황색 그래프가 x축 아래에 있으면 원래 함수는 내려가.</div><div class="step">3. 주황색 그래프가 부호를 +에서 −로 바꾸면 원래 함수는 극대 후보, −에서 +로 바꾸면 극소 후보야.</div><div class="step">4. 적분에서는 반대로 f(x)의 부호를 봐. f가 +면 누적 적분 F가 증가하고, f가 −면 F가 감소해.</div>';
  }
  draw();
 }
