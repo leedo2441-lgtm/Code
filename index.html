@@ -276,7 +276,7 @@ $('#zoom-in').addEventListener('click',()=>zoomGraph(.75));$('#zoom-out').addEve
 const graphWrap=$('#graph-wrap'),plot=$('#plot');let graphDrag=null;graphWrap.addEventListener('pointerdown',e=>{if(e.target.closest('.graph-toolbar'))return;graphWrap.setPointerCapture(e.pointerId);graphDrag={x:e.clientX,y:e.clientY,xmin,xmax,ymin,ymax};plot.classList.add('dragging')});
 graphWrap.addEventListener('pointermove',e=>{if(!graphDrag)return;const r=plot.getBoundingClientRect(),dx=(e.clientX-graphDrag.x)/r.width*(graphDrag.xmax-graphDrag.xmin),dy=(e.clientY-graphDrag.y)/r.height*(graphDrag.ymax-graphDrag.ymin);xmin=graphDrag.xmin-dx;xmax=graphDrag.xmax-dx;ymin=graphDrag.ymin+dy;ymax=graphDrag.ymax+dy;draw()});
 function graphDragEnd(){graphDrag=null;plot.classList.remove('dragging')}graphWrap.addEventListener('pointerup',graphDragEnd);graphWrap.addEventListener('pointercancel',graphDragEnd);
-graphWrap.addEventListener('wheel',e=>{e.preventDefault();const r=plot.getBoundingClientRect(),px=(e.clientX-r.left)/r.width,py=(e.clientY-r.top)/r.height;zoomGraph(e.deltaY<0?.82:1.22,xmin+px*(xmax-xmin),ymax-py*(ymax-ymin))},{passive:false});
+graphWrap.addEventListener('wheel',e=>{e.preventDefault();const r=plot.getBoundingClientRect(),px=(e.clientX-r.left)/r.width,py=(e.clientY-r.top)/r.height;zoomGraph(e.deltaY < 0 ? 0.82 : 1.22,xmin+px*(xmax-xmin),ymax-py*(ymax-ymin))},{passive:false});
 $('#xval').addEventListener('input',draw);$('#nval').addEventListener('input',draw);
 
 let authMode='signup';
