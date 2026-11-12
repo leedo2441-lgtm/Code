@@ -101,8 +101,11 @@ footer{padding:14px;color:#697586;background:#f7f8fa}
 @media(max-width:600px){.correspondence{gap:5px;padding:8px}.correspondence-card{padding:7px}.monotonic-list{font-size:11px}}
 
 
-/* Fixed radial menu: hidden until the center disc is tapped */
+/* Radial menu anchored directly to the center disc */
 .intro-inner{position:relative;display:flex;flex-direction:column;align-items:center}
+.disc-menu-wrap{position:relative;width:190px;height:190px;margin:20px auto 12px;flex:0 0 auto}
+.disc-menu-wrap .math-disc{position:absolute;inset:0;width:190px;height:190px;margin:0;z-index:6}
+.disc-menu-wrap .hub-menu,.disc-menu-wrap .hub-menu.open{left:50%;top:50%}
 .math-disc{position:relative;z-index:6;flex:0 0 auto}
 .hub-menu,.hub-menu.open{display:block!important;position:absolute!important;left:50%;top:50%;width:0;height:0;margin:0!important;padding:0;z-index:5;pointer-events:none;background:transparent}
 .hub-menu button{position:absolute!important;left:0!important;top:0!important;width:142px;min-height:58px;padding:10px 8px;display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;pointer-events:none;transform:translate(-50%,-50%) scale(.65);transition:opacity .22s,transform .28s,visibility .22s;box-shadow:0 8px 28px #0005;border-radius:14px;font-size:13px;white-space:normal}
@@ -121,7 +124,7 @@ footer{padding:14px;color:#697586;background:#f7f8fa}
 #expr3d::part(virtual-keyboard-toggle){display:inline-flex}
 .three-controls #expr3d{width:100%}
 @media(max-width:600px){
- .hub-menu button{width:clamp(105px,31vw,132px);font-size:12px;min-height:54px}
+ .disc-menu-wrap{width:190px;height:190px;margin:20px auto 12px}.disc-menu-wrap .math-disc{width:190px;height:190px}.hub-menu button{width:clamp(105px,31vw,132px);font-size:12px;min-height:54px}
  .hub-menu .menu-up{transform:translate(-50%,-50%) translateY(-132px) scale(.65)}
  .hub-menu .menu-down{transform:translate(-50%,-50%) translateY(132px) scale(.65)}
  .hub-menu.open .menu-up{transform:translate(-50%,-50%) translateY(-132px) scale(1)}
@@ -132,7 +135,7 @@ footer{padding:14px;color:#697586;background:#f7f8fa}
  .hub-menu.open .menu-right{transform:translate(-50%,-50%) translateX(min(35vw,145px)) scale(1)}
 }
 </style></head><body>
-<div id="intro"><div class="intro-inner"><div class="intro-kicker">VISUAL MATHEMATICS LAB</div><h1>미적분 탐구실</h1><p class="intro-sub">중앙의 수학 원판을 눌러 원하는 도구를 선택해.</p><div class="formula-rain" aria-hidden="true"><span style="--x:8%;--y:12%;--delay:0s">limₕ→₀</span><span style="--x:65%;--y:20%;--delay:.7s">∫ₐᵇ f(x)dx</span><span style="--x:28%;--y:62%;--delay:1.4s">d/dx xⁿ</span><span style="--x:76%;--y:65%;--delay:2.1s">∇f(x,y,z)</span></div><button class="math-disc" id="math-disc" aria-label="수학 메뉴 열기"><span>d/dx</span><i>∫</i></button><div class="hub-menu" id="hub-menu" aria-label="계산 도구 메뉴"><button class="menu-up" data-dest="calculator">함수 계산기</button><button class="menu-right" data-dest="integral">적분 원리</button><button class="menu-left" data-dest="derivative">미분 원리</button><button class="menu-down" data-dest="3d">삼차원 함수 계산기</button></div><div class="intro-links" id="intro-account">로그인이 필요해? <button id="open-signup">회원가입</button> · <button id="open-login">로그인</button></div></div></div>
+<div id="intro"><div class="intro-inner"><div class="intro-kicker">VISUAL MATHEMATICS LAB</div><h1>미적분 탐구실</h1><p class="intro-sub">중앙의 수학 원판을 눌러 원하는 도구를 선택해.</p><div class="formula-rain" aria-hidden="true"><span style="--x:8%;--y:12%;--delay:0s">limₕ→₀</span><span style="--x:65%;--y:20%;--delay:.7s">∫ₐᵇ f(x)dx</span><span style="--x:28%;--y:62%;--delay:1.4s">d/dx xⁿ</span><span style="--x:76%;--y:65%;--delay:2.1s">∇f(x,y,z)</span></div><div class="disc-menu-wrap"><button class="math-disc" id="math-disc" aria-label="수학 메뉴 열기"><span>d/dx</span><i>∫</i></button><div class="hub-menu" id="hub-menu" aria-label="계산 도구 메뉴"><button class="menu-up" data-dest="calculator">함수 계산기</button><button class="menu-right" data-dest="integral">적분 원리</button><button class="menu-left" data-dest="derivative">미분 원리</button><button class="menu-down" data-dest="3d">삼차원 함수 계산기</button></div></div><div class="intro-links" id="intro-account">로그인이 필요해? <button id="open-signup">회원가입</button> · <button id="open-login">로그인</button></div></div></div>
 <div id="auth"><div class="auth-card"><h2 id="auth-title">회원가입</h2><p>이 브라우저에서만 사용하는 체험용 계정이야.</p><input id="auth-user" maxlength="24" placeholder="아이디 (영문·숫자 3~24자)" autocomplete="username"><input id="auth-pass" type="password" minlength="6" placeholder="비밀번호 (6자 이상)" autocomplete="current-password"><div class="auth-status" id="auth-status"></div><div class="auth-actions"><button id="auth-submit">가입하기</button><button class="secondary" id="auth-switch">로그인으로</button><button class="secondary" id="auth-close">닫기</button></div><p class="auth-note">체험용 로그인 정보는 현재 브라우저에만 저장돼. 실제 서비스 계정이나 안전한 서버 인증은 아니며, 다른 기기와 동기화되지 않아.</p></div></div>
 <header><div class="eyebrow">VISUAL MATHEMATICS LAB · 02</div><h1 id="page-title">함수 계산기</h1><p id="page-description" class="page-description">함수식을 입력하고 그래프를 자유롭게 탐색해.</p>
 <div class="inputbox"><label>f(x) =</label><math-field id="expr" aria-label="LaTeX 수식 입력" math-virtual-keyboard-policy="auto">x^2</math-field><button id="apply">수식 적용</button></div><div class="examples"><span class="hint">예시:</span><button data-ex="x^2">x^2</button><button data-ex="x^3-2*x">x^3-2x</button><button data-ex="sin(x)">sin(x)</button><button data-ex="x^2+3*x+1">x^2+3x+1</button><button data-ex="1/x">1/x</button></div><div id="error" class="error"></div></header>
