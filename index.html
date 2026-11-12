@@ -25,7 +25,7 @@ body:before,body:after{display:none}
 header,main,footer{max-width:none;padding-left:0;padding-right:0}
 header{position:sticky;top:0;z-index:90;padding:8px 14px 10px;background:#292929;color:#f5f5f5;box-shadow:0 2px 7px #0002}
 header .eyebrow,header>p,.examples,.error{display:none}
-header h1{font-size:17px;letter-spacing:0;margin:0 0 7px;font-weight:600}
+header h1{font-size:17px;letter-spacing:0;margin:0 0 7px;font-weight:600}.page-description{display:block!important;color:#d7dce4!important;font-size:12px;margin:0!important;max-width:none!important}
 .inputbox{margin:0;padding:0;border:0;border-radius:0;background:transparent;gap:8px}
 .inputbox label{color:#ddd;font-size:14px}
 .inputbox math-field{background:#fff;color:#222;border:1px solid #cbd2dc;border-radius:5px;padding:5px 8px;font-size:19px;min-height:39px}
@@ -133,7 +133,7 @@ footer{padding:14px;color:#697586;background:#f7f8fa}
 </style></head><body>
 <div id="intro"><div class="intro-inner"><div class="intro-kicker">VISUAL MATHEMATICS LAB</div><h1>미적분 탐구실</h1><p class="intro-sub">중앙의 수학 원판을 눌러 원하는 도구를 선택해.</p><div class="formula-rain" aria-hidden="true"><span style="--x:8%;--y:12%;--delay:0s">limₕ→₀</span><span style="--x:65%;--y:20%;--delay:.7s">∫ₐᵇ f(x)dx</span><span style="--x:28%;--y:62%;--delay:1.4s">d/dx xⁿ</span><span style="--x:76%;--y:65%;--delay:2.1s">∇f(x,y,z)</span></div><button class="math-disc" id="math-disc" aria-label="수학 메뉴 열기"><span>d/dx</span><i>∫</i></button><div class="hub-menu" id="hub-menu" aria-label="계산 도구 메뉴"><button class="menu-up" data-dest="calculator">함수 계산기</button><button class="menu-right" data-dest="integral">적분 원리</button><button class="menu-left" data-dest="derivative">미분 원리</button><button class="menu-down" data-dest="3d">삼차원 함수 계산기</button></div><div class="intro-links" id="intro-account">로그인이 필요해? <button id="open-signup">회원가입</button> · <button id="open-login">로그인</button></div></div></div>
 <div id="auth"><div class="auth-card"><h2 id="auth-title">회원가입</h2><p>이 브라우저에서만 사용하는 체험용 계정이야.</p><input id="auth-user" maxlength="24" placeholder="아이디 (영문·숫자 3~24자)" autocomplete="username"><input id="auth-pass" type="password" minlength="6" placeholder="비밀번호 (6자 이상)" autocomplete="current-password"><div class="auth-status" id="auth-status"></div><div class="auth-actions"><button id="auth-submit">가입하기</button><button class="secondary" id="auth-switch">로그인으로</button><button class="secondary" id="auth-close">닫기</button></div><p class="auth-note">체험용 로그인 정보는 현재 브라우저에만 저장돼. 실제 서비스 계정이나 안전한 서버 인증은 아니며, 다른 기기와 동기화되지 않아.</p></div></div>
-<header><div class="eyebrow">VISUAL MATHEMATICS LAB · 02</div><h1>미적분 수식 탐구실</h1><p>함수를 입력하면 그래프와 미분·적분 결과가 즉시 나타나. 결과만 보여주는 게 아니라, 그 결과가 나오는 원리를 단계별로 확인해 보자.</p>
+<header><div class="eyebrow">VISUAL MATHEMATICS LAB · 02</div><h1 id="page-title">함수 계산기</h1><p id="page-description" class="page-description">함수식을 입력하고 그래프를 자유롭게 탐색해.</p>
 <div class="inputbox"><label>f(x) =</label><math-field id="expr" aria-label="LaTeX 수식 입력" math-virtual-keyboard-policy="auto">x^2</math-field><button id="apply">수식 적용</button></div><div class="examples"><span class="hint">예시:</span><button data-ex="x^2">x^2</button><button data-ex="x^3-2*x">x^3-2x</button><button data-ex="sin(x)">sin(x)</button><button data-ex="x^2+3*x+1">x^2+3x+1</button><button data-ex="1/x">1/x</button></div><div id="error" class="error"></div></header>
 <div class="account-bar" id="account-bar" style="max-width:1200px;padding:8px 22px"><span id="account-label"></span><button id="logout">로그아웃</button><button id="home-return">홈</button></div><main><nav class="tabs"><button class="active" data-mode="diff">미분이 왜 이렇게 될까?</button><button data-mode="int">적분은 왜 이렇게 될까?</button><button data-mode="both">함수·도함수 대응</button></nav>
 <div class="layout"><section class="panel"><h2 id="graphTitle">접선의 기울기 변화</h2><div class="graph-wrap" id="graph-wrap"><div class="graph-toolbar"><button type="button" id="zoom-in">+</button><button type="button" id="zoom-out">−</button><button type="button" id="zoom-reset">⌂</button></div><div class="graph-readout" id="graph-readout">x: −10 ~ 10 · y: −10 ~ 10</div><svg id="plot" viewBox="0 0 720 560" role="img" aria-label="확대·축소 및 이동 가능한 함수 그래프"></svg></div><div class="controls"><label for="xval" id="xlabel">관찰 위치 x = 1.00</label><input id="xval" type="range" min="-3" max="3" step=".01" value="1"></div><div class="controls" id="ncontrols"><label for="nval">적분 구간 분할</label><input id="nval" type="range" min="4" max="80" step="1" value="20"><span id="nlabel" class="hint">20개</span></div><div class="metrics" id="metrics"></div></section>
@@ -181,6 +181,8 @@ function draw(){
  const cards=[['함숫값 f(x)',fmt(y)],['도함수 f′(x)',fmt(val(df,x))],['부정적분 F(x)',anti.toString()],['0부터 x까지의 정적분',fmt(area(0,x,n))]];
  
  $('#metrics').innerHTML=cards.map(c=>'<div class="metric"><small>'+c[0]+'</small><strong>'+c[1]+'</strong></div>').join('');
+ $('#metrics').style.display=mode==='calc'?'none':'grid';
+ $('#derivative-compare').style.display=mode==='calc'?'none':'';
  const showCompare=mode==='both';$('#derivative-compare').classList.toggle('visible',showCompare);
  if(showCompare)drawDerivativeCompare(x);
  updateCorrespondence(x,y,slope);
@@ -265,7 +267,7 @@ function render(){
  }
  draw();
 }
-function setMode(m){mode=m;document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mode===m));$('#ncontrols').style.display=m==='int'||m==='both'?'flex':'none';render()}
+function setMode(m){mode=m;document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mode===m));$('#ncontrols').style.display=m==='int'?'flex':'none';$('#xval').parentElement.style.display=m==='calc'?'none':'flex';$('#metrics').style.display=m==='calc'?'none':'grid';$('.layout>.panel:last-child').style.display=m==='calc'?'none':'';$('#graphTitle').textContent=m==='diff'?'접선의 기울기 변화':m==='int'?'작은 넓이를 더해 전체 누적량 만들기':'함수 그래프';render()}
 $('#apply').addEventListener('click',()=>{try{compile();render()}catch(e){$('#error').textContent='수식을 읽지 못했어. 예: x^2, x^3-2*x, sin(x)';}});
 $('#expr').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();$('#apply').click()}});
 document.querySelectorAll('[data-ex]').forEach(b=>b.addEventListener('click',()=>{$('#expr').value=b.dataset.ex.replace(/\^([0-9]+)/g,'^{$1}').replace(/\*/g,'\\cdot ');$('#apply').click()}));
@@ -284,12 +286,22 @@ const authStoreKey='calc-lab-demo-account-v1';const sessionKey='calc-lab-browser
 function showAuth(mode){authMode=mode;$('#auth-title').textContent=mode==='signup'?'회원가입':'로그인';$('#auth-submit').textContent=mode==='signup'?'가입하기':'로그인';$('#auth-switch').textContent=mode==='signup'?'로그인으로':'회원가입으로';$('#auth-status').textContent='';$('#auth').classList.add('open')}
 async function digest(text){const bytes=new TextEncoder().encode(text);const hash=await crypto.subtle.digest('SHA-256',bytes);return Array.from(new Uint8Array(hash)).map(v=>v.toString(16).padStart(2,'0')).join('')}
 $('#start')?.addEventListener('click',()=>$('#intro').classList.add('hide'));$('#math-disc').addEventListener('click',()=>$('#hub-menu').classList.toggle('open'));
-function enterTool(dest){$('#intro').classList.add('hide');$('#threeD').style.display='none';document.querySelector('main').style.display='block';$('#account-bar').style.display='flex';if(dest==='3d'){document.querySelector('main').style.display='none';$('#threeD').style.display='block';draw3d();return}setMode(dest==='integral'?'int':dest==='derivative'?'diff':'both');window.scrollTo({top:0,behavior:'smooth'})}
+function enterTool(dest){
+ $('#intro').classList.add('hide');$('#hub-menu').classList.remove('open');
+ const main=document.querySelector('main'),header=document.querySelector('header');
+ $('#threeD').style.display='none';main.style.display='none';header.style.display='none';
+ $('#account-bar').style.display='flex';document.body.dataset.page=dest;
+ if(dest==='3d'){$('#threeD').style.display='block';draw3d();window.scrollTo(0,0);return}
+ header.style.display='block';main.style.display='flex';
+ const pages={calculator:['함수 계산기','데스모스처럼 함수식을 입력하고 그래프를 그리고, 확대·축소하거나 이동해.'],derivative:['미분 원리','접선의 기울기와 순간변화율, 도함수의 부호가 함수의 증가·감소를 결정하는 과정을 살펴봐.'],integral:['적분 원리','곡선 아래의 작은 넓이를 더해 정적분이 되는 과정과 누적량의 의미를 살펴봐.']};
+ const page=pages[dest]||pages.calculator;$('#page-title').textContent=page[0];$('#page-description').textContent=page[1];
+ setMode(dest==='integral'?'int':dest==='derivative'?'diff':'calc');window.scrollTo({top:0,behavior:'smooth'});
+}
 document.querySelectorAll('[data-dest]').forEach(b=>b.addEventListener('click',()=>enterTool(b.dataset.dest)));
 function updateAccount(){const logged=!!currentUser;$('#account-label').textContent=logged?currentUser+' 로그인됨':'';$('#account-bar').style.display=logged?'flex':'none';$('#intro-account').style.display=logged?'none':'block'}
-$('#home-return').addEventListener('click',()=>{document.querySelector('main').style.display='none';$('#threeD').style.display='none';$('#intro').classList.remove('hide');$('#hub-menu').classList.remove('open')});
+$('#home-return').addEventListener('click',()=>{document.querySelector('main').style.display='none';$('header').style.display='none';$('#threeD').style.display='none';document.body.dataset.page='home';$('#intro').classList.remove('hide');$('#hub-menu').classList.remove('open')});
 $('#logout').addEventListener('click',()=>{localStorage.removeItem(sessionKey);currentUser='';updateAccount();$('#intro').classList.remove('hide')});
-updateAccount();$('#intro').classList.remove('hide');
+updateAccount();document.querySelector('main').style.display='none';$('header').style.display='none';$('#threeD').style.display='none';document.body.dataset.page='home';$('#intro').classList.remove('hide');
 $('#open-signup').addEventListener('click',()=>showAuth('signup'));
 $('#open-login').addEventListener('click',()=>showAuth('login'));
 $('#auth-close').addEventListener('click',()=>$('#auth').classList.remove('open'));
