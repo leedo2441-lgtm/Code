@@ -49,7 +49,7 @@ function render(){
  const p=powerInfo(),der=nerdamer.diff(expr,'x').toString(),inte=nerdamer.integrate(expr,'x').toString();
  if(mode==='diff'){
   $('#graphTitle').textContent='두 점을 이은 직선이 접선으로 가까워지는 과정';$('#sideTitle').textContent='미분은 순간 변화율을 구하는 것';
-  let details=p?'<div class="formula">f(x) = '+expr+'<br>f′(x) = '+der+'</div><div class="step">거듭제곱 미분법: xⁿ을 미분하면 지수 n이 앞으로 내려오고, 지수는 1 작아져.</div><div class="formula">c·xⁿ → c·n·x⁽ⁿ⁻¹⁾<br>'+p.c+' × '+p.n+' × x⁽'+(p.n-1)+'⁾ = '+der+'</div>':'<div class="formula">f′(x) = limₕ→₀ [f(x+h) − f(x)] / h<br>계산된 도함수: '+der+'</div><div class="step">1. x에서 조금 떨어진 x+h를 잡아 두 점을 연결해. 그 직선의 기울기는 [f(x+h)−f(x)]/h야.</div><div class="step">2. h를 0에 가깝게 줄이면 두 점을 잇는 직선이 한 점에서의 접선에 가까워져.</div><div class="step">3. 그 극한값이 순간 변화율, 즉 도함수야. 아래 그래프의 주황색 선이 접선이야.</div>';
+  let details=p?'<div class="formula">f(x) = '+expr+'<br>f′(x) = '+der+'</div><div class="step">'+ (p?'거듭제곱 함수는 지수에 1을 더하고 새 지수로 나누면 돼.':'삼각함수나 여러 항이 섞인 함수는 각 항의 미분 관계를 거꾸로 이용해 원시함수를 찾아. 예를 들어 sin(x)의 원시함수는 −cos(x)야.') + '</div><div class="formula">c·xⁿ → c·n·x⁽ⁿ⁻¹⁾<br>'+p.c+' × '+p.n+' × x⁽'+(p.n-1)+'⁾ = '+der+'</div>':'<div class="formula">f′(x) = limₕ→₀ [f(x+h) − f(x)] / h<br>계산된 도함수: '+der+'</div><div class="step">1. x에서 조금 떨어진 x+h를 잡아 두 점을 연결해. 그 직선의 기울기는 [f(x+h)−f(x)]/h야.</div><div class="step">2. h를 0에 가깝게 줄이면 두 점을 잇는 직선이 한 점에서의 접선에 가까워져.</div><div class="step">3. 그 극한값이 순간 변화율, 즉 도함수야. 아래 그래프의 주황색 선이 접선이야.</div>';
   $('#explain').innerHTML='<p>미분은 함수값 자체가 아니라 <strong>그 순간 얼마나 빠르게 변하는지</strong>를 구해.</p>'+details;
   $('#steps').innerHTML='<div class="step">슬라이더를 움직여 봐. x 위치가 바뀌면 접선의 기울기도 달라져.</div><div class="step">도함수 '+der+'는 모든 x 위치에서 접선의 기울기를 알려주는 새로운 함수야.</div>';
  }else if(mode==='int'){
