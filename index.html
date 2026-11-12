@@ -25,7 +25,8 @@ const $=s=>document.querySelector(s);let mode='diff',expr='x^2',f=null,df=null,a
 const fmt=n=>Number.isFinite(n)?(Math.abs(n)<.0005?'0':n.toFixed(4)):'정의되지 않음';
 const clean=s=>String(s).replace(/\s+/g,'');
 function compile(){
- const raw=$('#expr').value.trim();if(!raw)throw Error('함수를 입력해 줘.');
+ const latex=$('#expr').value.trim();if(!latex)throw Error('함수를 입력해 줘.');
+ const raw=nerdamer.convertFromLaTeX(latex).toString();
  const candidate=nerdamer(raw);const fn=candidate.buildFunction(['x']);const deriv=nerdamer.diff(raw,'x').toString();const integral=nerdamer.integrate(raw,'x').toString();
  const dfn=nerdamer(deriv).buildFunction(['x']);const ifn=nerdamer(integral).buildFunction(['x']);
  for(const v of [-1.2,0,1.3]){const z=fn(v);if(!Number.isFinite(z))continue}
