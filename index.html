@@ -96,7 +96,7 @@ document.querySelectorAll('[data-dest]').forEach(b=>b.addEventListener('click',(
 function updateAccount(){const logged=!!currentUser;$('#account-label').textContent=logged?currentUser+' 로그인됨':'';$('#account-bar').style.display=logged?'flex':'none';$('#intro-account').style.display=logged?'none':'block'}
 $('#home-return').addEventListener('click',()=>{document.querySelector('main').style.display='none';$('#threeD').style.display='none';$('#intro').classList.remove('hide');$('#hub-menu').classList.remove('open')});
 $('#logout').addEventListener('click',()=>{localStorage.removeItem(sessionKey);currentUser='';updateAccount();$('#intro').classList.remove('hide')});
-updateAccount();if(currentUser){$('#intro').classList.add('hide')}else{$('#intro').classList.remove('hide')}
+updateAccount();$('#intro').classList.remove('hide');
 $('#open-signup').addEventListener('click',()=>showAuth('signup'));
 $('#open-login').addEventListener('click',()=>showAuth('login'));
 $('#auth-close').addEventListener('click',()=>$('#auth').classList.remove('open'));
@@ -117,7 +117,7 @@ $('#auth-submit').addEventListener('click',async()=>{
   const account=accounts[user];
   if(!account||account.hash!==await digest(account.salt+pass)){$('#auth-status').textContent='아이디 또는 비밀번호가 맞지 않아.';return}
   $('#auth-status').textContent='로그인됐어. 수학 탐구를 시작해 보자.';
-  currentUser=user;localStorage.setItem(sessionKey,user);updateAccount();$('#auth').classList.remove('open');$('#intro').classList.add('hide');
+  currentUser=user;localStorage.setItem(sessionKey,user);updateAccount();$('#auth').classList.remove('open');$('#intro').classList.remove('hide');
  }
 });
 
