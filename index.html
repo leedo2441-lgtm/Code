@@ -1,37 +1,73 @@
 <!doctype html>
-<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#090d18"><title>미적분 시각화 연구실</title>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#090d18"><title>미적분 수식 탐구실</title>
+<script src="https://cdn.jsdelivr.net/npm/nerdamer@1.1.13/all.min.js"></script>
 <style>
 :root{color-scheme:dark;--bg:#090d18;--panel:#121c2c;--line:#293850;--muted:#91a0b8;--text:#eef3ff;--blue:#76a9ff;--cyan:#63e0d1;--orange:#ffb86b}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 80% -20%,#1b3153,transparent 45%),var(--bg);color:var(--text);font-family:system-ui,"Noto Sans KR",sans-serif;line-height:1.55}header,main,footer{max-width:1160px;margin:auto;padding-left:22px;padding-right:22px}header{padding-top:42px;padding-bottom:25px}.eyebrow{color:var(--cyan);font-size:12px;letter-spacing:.18em;font-weight:800}h1{font-size:clamp(30px,5vw,54px);letter-spacing:-.05em;line-height:1.1;margin:12px 0}header p{color:var(--muted);max-width:650px}.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 18px}button,select{font:inherit;border:1px solid var(--line);background:#121b2b;color:var(--text);border-radius:12px;padding:10px 15px;cursor:pointer}button.active{background:#1d3b68;border-color:#548de2}.layout{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(280px,.9fr);gap:16px}.panel{background:linear-gradient(145deg,#131d2d,#0f1725);border:1px solid var(--line);border-radius:20px;padding:18px;box-shadow:0 16px 45px #0002}.panel h2{font-size:17px;margin:0 0 12px}.graph-wrap{background:#0b1220;border:1px solid #243149;border-radius:14px;overflow:hidden}svg{display:block;width:100%;height:auto}.controls{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:15px}.controls label{font-size:13px;color:var(--muted)}input[type=range]{accent-color:var(--blue);width:min(240px,55vw)}select{padding:9px}.metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-top:12px}.metric{background:#0d1625;border:1px solid #243149;border-radius:13px;padding:12px}.metric small{display:block;color:var(--muted);font-size:11px}.metric strong{font-size:19px;color:var(--cyan);font-variant-numeric:tabular-nums}.explain{color:#c4cee0;font-size:14px}.formula{font-family:ui-monospace,monospace;color:#a9c9ff;background:#0b1423;border:1px solid #253652;border-radius:10px;padding:11px;overflow:auto}.steps{display:grid;gap:8px;margin-top:12px}.step{padding:10px 12px;border-left:2px solid var(--blue);background:#101a2a;border-radius:0 10px 10px 0;font-size:13px;color:#c4cee0}footer{padding-top:24px;padding-bottom:35px;color:#71819a;font-size:12px}@media(max-width:800px){.layout{grid-template-columns:1fr}header{padding-top:30px}.panel{padding:14px}}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 80% -20%,#1b3153,transparent 45%),var(--bg);color:var(--text);font-family:system-ui,"Noto Sans KR",sans-serif;line-height:1.6}header,main,footer{max-width:1200px;margin:auto;padding-left:22px;padding-right:22px}header{padding-top:38px;padding-bottom:20px}.eyebrow{color:var(--cyan);font-size:12px;letter-spacing:.18em;font-weight:800}h1{font-size:clamp(30px,5vw,52px);letter-spacing:-.05em;line-height:1.12;margin:10px 0}header p{color:var(--muted);max-width:760px}.inputbox{display:flex;gap:9px;align-items:center;flex-wrap:wrap;background:#101a2a;border:1px solid var(--line);padding:13px;border-radius:16px;margin:12px 0 16px}.inputbox label{color:var(--muted);font-size:13px}.inputbox input{flex:1;min-width:180px;background:#080f1c;border:1px solid #344762;color:white;border-radius:10px;padding:12px;font:16px ui-monospace,monospace}.inputbox button,.tabs button{font:inherit;border:1px solid var(--line);background:#172338;color:var(--text);border-radius:11px;padding:10px 16px;cursor:pointer}.inputbox button{background:#244b7d;border-color:#477ec2}.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 16px}.tabs button.active{background:#1d3b68;border-color:#548de2}.layout{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(300px,1fr);gap:15px}.panel{background:linear-gradient(145deg,#131d2d,#0f1725);border:1px solid var(--line);border-radius:18px;padding:17px;min-width:0}.panel h2{font-size:17px;margin:0 0 12px}.graph-wrap{background:#0b1220;border:1px solid #243149;border-radius:13px;overflow:hidden}svg{display:block;width:100%;height:auto}.controls{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:13px}.controls label{font-size:13px;color:var(--muted)}input[type=range]{accent-color:var(--blue);width:min(250px,55vw)}.metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:11px}.metric{background:#0d1625;border:1px solid #243149;border-radius:12px;padding:10px}.metric small{display:block;color:var(--muted);font-size:11px}.metric strong{font-size:17px;color:var(--cyan);font-variant-numeric:tabular-nums;overflow-wrap:anywhere}.formula{font-family:ui-monospace,monospace;color:#b8d2ff;background:#0b1423;border:1px solid #253652;border-radius:10px;padding:10px;margin:10px 0;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere}.explain{font-size:14px;color:#c4cee0}.step{padding:10px 12px;border-left:2px solid var(--blue);background:#101a2a;border-radius:0 10px 10px 0;font-size:13px;color:#c4cee0;margin:8px 0}.hint{font-size:12px;color:var(--muted)}.error{color:#ff9b9b;font-size:13px;min-height:20px}.examples{display:flex;gap:7px;flex-wrap:wrap;margin-top:8px}.examples button{background:#111d30;color:#bcd4f8;border:1px solid #2d405c;border-radius:20px;padding:5px 10px;font-size:12px;cursor:pointer}footer{padding:22px 22px 35px;color:#71819a;font-size:12px}@media(max-width:850px){.layout{grid-template-columns:1fr}header{padding-top:27px}.panel{padding:13px}}
 </style></head><body>
-<header><div class="eyebrow">VISUAL MATHEMATICS LAB · 01</div><h1>미적분 시각화 연구실</h1><p>공식을 외우기 전에 그래프를 움직여 보자. 점을 옮기고, 기울기를 바꾸고, 넓이가 쌓이는 모습을 직접 확인할 수 있어.</p></header>
-<main><nav class="tabs"><button class="active" data-mode="limit">극한</button><button data-mode="diff">미분</button><button data-mode="int">적분</button></nav>
-<div class="layout"><section class="panel"><h2 id="graphTitle">가까워지는 값 관찰하기</h2><div class="graph-wrap"><svg id="plot" viewBox="0 0 720 430" role="img" aria-label="함수 그래프 시각화"></svg></div>
-<div class="controls"><label for="func">함수</label><select id="func"><option value="square">f(x) = x²</option><option value="cube">f(x) = x³</option><option value="sin">f(x) = sin(x)</option><option value="abs">f(x) = |x|</option></select><label for="xval" id="sliderLabel">x = 1.00</label><input id="xval" type="range" min="-2.5" max="2.5" step=".01" value="1"></div>
-<div class="controls" id="extraControls" style="display:none"><label for="nval">구간 분할</label><input id="nval" type="range" min="4" max="60" step="1" value="12"><span id="nlabel" class="explain">12개</span></div><div class="metrics" id="metrics"></div></section>
-<aside class="panel"><h2 id="sideTitle">극한은 무엇일까?</h2><div id="explain" class="explain"></div><div class="steps" id="steps"></div></aside></div></main>
-<footer>그래프는 개념 이해를 위한 수치 근사 시각화야. 계산 결과는 표시된 소수 자릿수에서 반올림돼.</footer>
+<header><div class="eyebrow">VISUAL MATHEMATICS LAB · 02</div><h1>미적분 수식 탐구실</h1><p>함수를 입력하면 그래프와 미분·적분 결과가 즉시 나타나. 결과만 보여주는 게 아니라, 그 결과가 나오는 원리를 단계별로 확인해 보자.</p>
+<div class="inputbox"><label for="expr">f(x) =</label><input id="expr" value="x^2" autocomplete="off" spellcheck="false" aria-label="함수 수식 입력"><button id="apply">수식 적용</button></div><div class="examples"><span class="hint">예시:</span><button data-ex="x^2">x^2</button><button data-ex="x^3-2*x">x^3-2x</button><button data-ex="sin(x)">sin(x)</button><button data-ex="x^2+3*x+1">x^2+3x+1</button><button data-ex="1/x">1/x</button></div><div id="error" class="error"></div></header>
+<main><nav class="tabs"><button class="active" data-mode="diff">미분이 왜 이렇게 될까?</button><button data-mode="int">적분은 왜 이렇게 될까?</button><button data-mode="both">함수 그래프</button></nav>
+<div class="layout"><section class="panel"><h2 id="graphTitle">접선의 기울기 변화</h2><div class="graph-wrap"><svg id="plot" viewBox="0 0 720 420" role="img" aria-label="입력한 함수의 그래프와 미적분 시각화"></svg></div><div class="controls"><label for="xval" id="xlabel">관찰 위치 x = 1.00</label><input id="xval" type="range" min="-3" max="3" step=".01" value="1"></div><div class="controls" id="ncontrols"><label for="nval">적분 구간 분할</label><input id="nval" type="range" min="4" max="80" step="1" value="20"><span id="nlabel" class="hint">20개</span></div><div class="metrics" id="metrics"></div></section>
+<aside class="panel"><h2 id="sideTitle">미분의 원리</h2><div id="explain" class="explain"></div><div id="steps"></div></aside></div></main><footer>수식 계산은 Nerdamer 기반이야. 그래프와 넓이는 개념을 보여주기 위한 수치 근사이며, 적분상수 C는 별도로 표시해.</footer>
 <script>
-const $=s=>document.querySelector(s),svg=$('#plot');let mode='limit';
-const funcs={square:{f:x=>x*x,d:x=>2*x},cube:{f:x=>x*x*x,d:x=>3*x*x},sin:{f:x=>Math.sin(x),d:x=>Math.cos(x)},abs:{f:x=>Math.abs(x),d:x=>x===0?NaN:Math.sign(x)}};
-const W=720,H=430,L=58,R=22,T=24,B=48,X=5.4,Y=5.2,sx=x=>L+(x+X/2)/X*(W-L-R),sy=y=>T+(Y/2-y)/Y*(H-T-B);
-const fmt=n=>Number.isFinite(n)?(Math.abs(n)<.0005?'0':n.toFixed(3)):'정의되지 않음';
-function pathFor(f){let d='';for(let i=0;i<=500;i++){let x=-X/2+i*X/500,y=f(x);d+=(i?'L':'M')+sx(x).toFixed(2)+','+sy(y).toFixed(2)}return d}
+const $=s=>document.querySelector(s);let mode='diff',expr='x^2',f=null,df=null,anti=null;
+const fmt=n=>Number.isFinite(n)?(Math.abs(n)<.0005?'0':n.toFixed(4)):'정의되지 않음';
+const clean=s=>String(s).replace(/\s+/g,'');
+function compile(){
+ const raw=$('#expr').value.trim();if(!raw)throw Error('함수를 입력해 줘.');
+ const candidate=nerdamer(raw);const fn=candidate.buildFunction(['x']);const deriv=nerdamer.diff(raw,'x').toString();const integral=nerdamer.integrate(raw,'x').toString();
+ const dfn=nerdamer(deriv).buildFunction(['x']);const ifn=nerdamer(integral).buildFunction(['x']);
+ for(const v of [-1.2,0,1.3]){const z=fn(v);if(!Number.isFinite(z))continue}
+ expr=raw;f=fn;df=dfn;anti=ifn;$('#error').textContent='';draw();
+}
+function val(fn,x){try{const z=fn(x);return Number.isFinite(z)?z:NaN}catch(e){return NaN}}
+const W=720,H=420,L=58,R=22,T=24,B=42,xmin=-4,xmax=4,ymin=-6,ymax=6,sx=x=>L+(x-xmin)/(xmax-xmin)*(W-L-R),sy=y=>T+(ymax-y)/(ymax-ymin)*(H-T-B);
+function path(){let d='',pen=false;for(let i=0;i<=700;i++){const x=xmin+(xmax-xmin)*i/700,y=val(f,x);if(!Number.isFinite(y)||Math.abs(y)>30){pen=false;continue}d+=(pen?'L':'M')+sx(x).toFixed(2)+','+sy(y).toFixed(2);pen=true}return d}
 function line(x1,y1,x2,y2,color,width,dash){return '<line x1="'+sx(x1)+'" y1="'+sy(y1)+'" x2="'+sx(x2)+'" y2="'+sy(y2)+'" stroke="'+color+'" stroke-width="'+width+'" '+(dash?'stroke-dasharray="'+dash+'"':'')+'/>'}
-function riemann(f,a,b,n){let dx=(b-a)/n,sum=0;for(let i=0;i<n;i++)sum+=f(a+i*dx)*dx;return sum}
-function draw(){let f=funcs[$('#func').value],x=+$('#xval').value,y=f.f(x),d=f.d(x),n=+$('#nval').value,s='';
-for(let gx=-2;gx<=2;gx++){s+='<line x1="'+sx(gx)+'" y1="'+T+'" x2="'+sx(gx)+'" y2="'+(H-B)+'" stroke="#1d2a40"/><text x="'+sx(gx)+'" y="'+(H-B+22)+'" fill="#8292ad" font-size="12" text-anchor="middle">'+gx+'</text>'}
-for(let gy=-2;gy<=2;gy++)s+='<line x1="'+L+'" y1="'+sy(gy)+'" x2="'+(W-R)+'" y2="'+sy(gy)+'" stroke="#1d2a40"/><text x="'+(L-12)+'" y="'+(sy(gy)+4)+'" fill="#8292ad" font-size="12" text-anchor="end">'+gy+'</text>';
-s+='<line x1="'+L+'" y1="'+sy(0)+'" x2="'+(W-R)+'" y2="'+sy(0)+'" stroke="#71819a" stroke-width="1.5"/><line x1="'+sx(0)+'" y1="'+T+'" x2="'+sx(0)+'" y2="'+(H-B)+'" stroke="#71819a" stroke-width="1.5"/>';
-if(mode==='int'){let a=0,b=x,dx=(b-a)/n;for(let i=0;i<n;i++){let x0=a+i*dx,x1=x0+dx,yy=f.f(x0);s+='<rect x="'+Math.min(sx(x0),sx(x1))+'" y="'+Math.min(sy(yy),sy(0))+'" width="'+Math.abs(sx(x1)-sx(x0))+'" height="'+Math.abs(sy(yy)-sy(0))+'" fill="#63e0d1" opacity=".22" stroke="#63e0d1" stroke-width=".6"/>'}}
-s+='<path d="'+pathFor(f.f)+'" fill="none" stroke="#76a9ff" stroke-width="3" stroke-linecap="round"/>';
-if(mode==='diff'&&Number.isFinite(d)){let h=.8;s+=line(x-h,y-d*h,x+h,y+d*h,'#ffb86b',2,'7 5')+line(x,y,x,0,'#ffb86b',1,'3 4')}
-if(mode==='limit')s+='<circle cx="'+sx(x)+'" cy="'+sy(y)+'" r="6" fill="#ffb86b" stroke="#fff" stroke-width="2"/>';
-s+='<text x="'+(W-28)+'" y="'+(H-13)+'" fill="#9aaac2" font-size="13">x</text><text x="'+(L+10)+'" y="'+(T+12)+'" fill="#9aaac2" font-size="13">y</text>';svg.innerHTML=s;
-$('#sliderLabel').textContent='x = '+x.toFixed(2);$('#nlabel').textContent=n+'개';
-let cards=mode==='limit'?[['현재 함수값',fmt(y)],['가까워지는 값',fmt(y)]]:mode==='diff'?[['현재 함수값',fmt(y)],['접선의 기울기',fmt(d)]]:[['구간','[0, '+x.toFixed(2)+']'],['넓이의 근삿값',fmt(riemann(f.f,0,x,n))]];
-$('#metrics').innerHTML=cards.map(c=>'<div class="metric"><small>'+c[0]+'</small><strong>'+c[1]+'</strong></div>').join('')}
-const content={limit:{title:'극한은 무엇일까?',head:'입력값이 어떤 수에 <strong>한없이 가까워질 때</strong>, 함수값이 어디로 향하는지 보는 개념이야.',formula:'limₓ→ₐ f(x) = L',steps:['주황색 점은 현재 x에서의 함수값을 나타내.','x를 조금씩 움직이면서 y값이 어디로 향하는지 관찰해.','극한은 그 점에서의 실제 함수값과 달라도 될 수 있어.']},diff:{title:'미분은 순간 변화율',head:'두 점을 잇는 직선의 기울기에서 출발해. 두 점 사이의 간격을 0에 가깝게 줄이면 <strong>접선의 기울기</strong>에 가까워져.',formula:'f′(x) = limₕ→₀ [f(x+h)−f(x)] / h',steps:['x 위치를 선택해.','주황색 점선은 그 위치에서의 접선을 보여줘.','x에 따라 접선의 기울기가 어떻게 변하는지 확인해. |x|의 꼭짓점에서는 미분계수가 존재하지 않아.']},int:{title:'적분은 작은 넓이의 합',head:'구간을 잘게 나누고 직사각형 넓이를 더하면 곡선 아래 넓이에 가까워져. 분할 수를 늘려 보자.',formula:'∫₀ˣ f(t) dt',steps:['0부터 선택한 x까지를 직사각형으로 나눠.','각 직사각형의 넓이를 모두 더해.','분할 개수가 커질수록 근삿값이 정교해져. x가 음수면 방향에 따라 부호가 바뀌어.']}};
-function setMode(m){mode=m;document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mode===m));let c=content[m];$('#graphTitle').textContent=m==='limit'?'가까워지는 값 관찰하기':m==='diff'?'접선의 기울기 관찰하기':'직사각형으로 넓이 쌓기';$('#sideTitle').textContent=c.title;$('#explain').innerHTML=c.head+'<p class="formula">'+c.formula+'</p>';$('#steps').innerHTML=c.steps.map(t=>'<div class="step">'+t+'</div>').join('');$('#extraControls').style.display=m==='int'?'flex':'none';draw()}
-document.querySelectorAll('[data-mode]').forEach(b=>b.addEventListener('click',()=>setMode(b.dataset.mode)));$('#func').addEventListener('change',draw);$('#xval').addEventListener('input',draw);$('#nval').addEventListener('input',draw);setMode('limit');
+function area(a,b,n){let sum=0,dx=(b-a)/n;for(let i=0;i<n;i++)sum+=val(f,a+(i+.5)*dx)*dx;return sum}
+function draw(){
+ const x=+$('#xval').value,y=val(f,x),slope=val(df,x),n=+$('#nval').value;let out='';
+ for(let gx=-4;gx<=4;gx++){out+='<line x1="'+sx(gx)+'" y1="'+T+'" x2="'+sx(gx)+'" y2="'+(H-B)+'" stroke="#1d2a40"/><text x="'+sx(gx)+'" y="'+(H-B+19)+'" fill="#8292ad" font-size="11" text-anchor="middle">'+gx+'</text>'}
+ for(let gy=-6;gy<=6;gy+=2)out+='<line x1="'+L+'" y1="'+sy(gy)+'" x2="'+(W-R)+'" y2="'+sy(gy)+'" stroke="#1d2a40"/><text x="'+(L-10)+'" y="'+(sy(gy)+4)+'" fill="#8292ad" font-size="11" text-anchor="end">'+gy+'</text>';
+ out+='<line x1="'+L+'" y1="'+sy(0)+'" x2="'+(W-R)+'" y2="'+sy(0)+'" stroke="#71819a" stroke-width="1.5"/><line x1="'+sx(0)+'" y1="'+T+'" x2="'+sx(0)+'" y2="'+(H-B)+'" stroke="#71819a" stroke-width="1.5"/>';
+ if(mode==='int'||mode==='both'){
+  const a=0,b=x,dx=(b-a)/n;for(let i=0;i<n;i++){const x0=a+i*dx,x1=x0+dx,mid=(x0+x1)/2,yy=val(f,mid);if(!Number.isFinite(yy)||Math.abs(yy)>20)continue;out+='<rect x="'+Math.min(sx(x0),sx(x1))+'" y="'+Math.min(sy(yy),sy(0))+'" width="'+Math.max(0,Math.abs(sx(x1)-sx(x0)))+'" height="'+Math.abs(sy(yy)-sy(0))+'" fill="#63e0d1" opacity=".2" stroke="#63e0d1" stroke-width=".6"/>'}
+ }
+ out+='<path d="'+path()+'" fill="none" stroke="#76a9ff" stroke-width="3" stroke-linecap="round"/>';
+ if((mode==='diff'||mode==='both')&&Number.isFinite(slope)&&Number.isFinite(y)){const h=1.15;out+=line(x-h,y-slope*h,x+h,y+slope*h,'#ffb86b',2,'7 5');out+='<circle cx="'+sx(x)+'" cy="'+sy(y)+'" r="5.5" fill="#ffb86b" stroke="#fff" stroke-width="1.5"/>'}
+ $('#plot').innerHTML=out+'<text x="'+(W-22)+'" y="'+(H-9)+'" fill="#9aaac2" font-size="12">x</text>';
+ $('#xlabel').textContent='관찰 위치 x = '+x.toFixed(2);$('#nlabel').textContent=n+'개';
+ const cards=[['함숫값 f(x)',fmt(y)],['도함수 f′(x)',fmt(val(df,x))],['부정적분 F(x)',anti.toString()],['0부터 x까지의 정적분',fmt(area(0,x,n))]];
+ $('#metrics').innerHTML=cards.map(c=>'<div class="metric"><small>'+c[0]+'</small><strong>'+c[1]+'</strong></div>').join('');
+}
+function powerInfo(){
+ const s=clean(expr);let m=s.match(/^([+-]?(?:\d+(?:\.\d*)?|\.\d+)?\*?)x(?:\^([+-]?\d+))?$/);
+ if(!m)return null;let c=m[1]||'1';c=c.replace('*','');if(c===''||c==='+')c='1';if(c==='-')c='-1';return {c:Number(c),n:m[2]?Number(m[2]):1};
+}
+function render(){
+ const p=powerInfo(),der=nerdamer.diff(expr,'x').toString(),inte=nerdamer.integrate(expr,'x').toString();
+ if(mode==='diff'){
+  $('#graphTitle').textContent='두 점을 이은 직선이 접선으로 가까워지는 과정';$('#sideTitle').textContent='미분은 순간 변화율을 구하는 것';
+  let details=p?'<div class="formula">f(x) = '+expr+'<br>f′(x) = '+der+'</div><div class="step">거듭제곱 미분법: xⁿ을 미분하면 지수 n이 앞으로 내려오고, 지수는 1 작아져.</div><div class="formula">c·xⁿ → c·n·x⁽ⁿ⁻¹⁾<br>'+p.c+' × '+p.n+' × x⁽'+(p.n-1)+'⁾ = '+der+'</div>':'<div class="formula">f′(x) = limₕ→₀ [f(x+h) − f(x)] / h<br>계산된 도함수: '+der+'</div><div class="step">1. x에서 조금 떨어진 x+h를 잡아 두 점을 연결해. 그 직선의 기울기는 [f(x+h)−f(x)]/h야.</div><div class="step">2. h를 0에 가깝게 줄이면 두 점을 잇는 직선이 한 점에서의 접선에 가까워져.</div><div class="step">3. 그 극한값이 순간 변화율, 즉 도함수야. 아래 그래프의 주황색 선이 접선이야.</div>';
+  $('#explain').innerHTML='<p>미분은 함수값 자체가 아니라 <strong>그 순간 얼마나 빠르게 변하는지</strong>를 구해.</p>'+details;
+  $('#steps').innerHTML='<div class="step">슬라이더를 움직여 봐. x 위치가 바뀌면 접선의 기울기도 달라져.</div><div class="step">도함수 '+der+'는 모든 x 위치에서 접선의 기울기를 알려주는 새로운 함수야.</div>';
+ }else if(mode==='int'){
+  $('#graphTitle').textContent='작은 넓이를 더해 전체 누적량 만들기';$('#sideTitle').textContent='적분은 작은 변화량을 모두 더하는 것';
+  $('#explain').innerHTML='<p>정적분은 그래프와 x축 사이의 <strong>부호를 가진 넓이</strong>를 누적해. 부정적분은 미분했을 때 원래 함수가 되는 함수를 찾는 과정이야.</p><div class="formula">∫ f(x) dx = '+inte+' + C</div><div class="step">적분은 미분의 역방향이야. '+inte+'를 미분하면 다시 '+expr+'가 돼.</div><div class="step">거듭제곱 '+(p?'xⁿ':'함수')+'의 경우 지수에 1을 더하고, 새 지수로 나누는 규칙이 적용돼.</div><div class="formula">∫ xⁿ dx = x⁽ⁿ⁺¹⁾ / (n+1) + C<br>단, n ≠ −1</div>';
+  $('#steps').innerHTML='<div class="step">그래프의 색칠된 직사각형 하나하나는 작은 넓이의 근삿값이야.</div><div class="step">분할 개수를 늘리면 직사각형의 폭이 좁아져 곡선 아래 넓이에 가까워져.</div><div class="step">x가 음수이면 적분 방향 때문에 부호가 음수가 될 수 있어.</div>';
+ }else{
+  $('#graphTitle').textContent='입력한 함수의 전체 그래프';$('#sideTitle').textContent='함수 하나로 미분과 적분 연결하기';
+  $('#explain').innerHTML='<div class="formula">f(x) = '+expr+'<br>f′(x) = '+der+'<br>∫f(x)dx = '+inte+' + C</div><p>같은 함수에서 미분은 순간 변화율을, 적분은 누적된 변화를 나타내. 미분과 적분은 서로 역관계로 연결돼.</p>';
+  $('#steps').innerHTML='<div class="step">미분 탭에서는 접선의 기울기를 확인할 수 있어.</div><div class="step">적분 탭에서는 넓이가 쌓이는 모습을 확인할 수 있어.</div>';
+ }
+ draw();
+}
+function setMode(m){mode=m;document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mode===m));$('#ncontrols').style.display=m==='int'||m==='both'?'flex':'none';render()}
+$('#apply').addEventListener('click',()=>{try{compile();render()}catch(e){$('#error').textContent='수식을 읽지 못했어. 예: x^2, x^3-2*x, sin(x)';}});
+$('#expr').addEventListener('keydown',e=>{if(e.key==='Enter')$('#apply').click()});
+document.querySelectorAll('[data-ex]').forEach(b=>b.addEventListener('click',()=>{$('#expr').value=b.dataset.ex;$('#apply').click()}));
+document.querySelectorAll('[data-mode]').forEach(b=>b.addEventListener('click',()=>setMode(b.dataset.mode)));
+$('#xval').addEventListener('input',draw);$('#nval').addEventListener('input',draw);
+try{compile();setMode('diff')}catch(e){$('#error').textContent='수식 계산 라이브러리를 불러오지 못했어. 인터넷 연결을 확인해 줘.'}
 </script></body></html>
