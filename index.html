@@ -106,7 +106,7 @@ footer{padding:14px;color:#697586;background:#f7f8fa}
 <div class="inputbox"><label>f(x) =</label><math-field id="expr" aria-label="LaTeX 수식 입력" math-virtual-keyboard-policy="auto">x^2</math-field><button id="apply">수식 적용</button></div><div class="examples"><span class="hint">예시:</span><button data-ex="x^2">x^2</button><button data-ex="x^3-2*x">x^3-2x</button><button data-ex="sin(x)">sin(x)</button><button data-ex="x^2+3*x+1">x^2+3x+1</button><button data-ex="1/x">1/x</button></div><div id="error" class="error"></div></header>
 <div class="account-bar" id="account-bar" style="max-width:1200px;padding:8px 22px"><span id="account-label"></span><button id="logout">로그아웃</button><button id="home-return">홈</button></div><main><nav class="tabs"><button class="active" data-mode="diff">미분이 왜 이렇게 될까?</button><button data-mode="int">적분은 왜 이렇게 될까?</button><button data-mode="both">함수·도함수 대응</button></nav>
 <div class="layout"><section class="panel"><h2 id="graphTitle">접선의 기울기 변화</h2><div class="graph-wrap" id="graph-wrap"><div class="graph-toolbar"><button type="button" id="zoom-in">+</button><button type="button" id="zoom-out">−</button><button type="button" id="zoom-reset">⌂</button></div><div class="graph-readout" id="graph-readout">x: −10 ~ 10 · y: −10 ~ 10</div><svg id="plot" viewBox="0 0 720 560" role="img" aria-label="확대·축소 및 이동 가능한 함수 그래프"></svg></div><div class="controls"><label for="xval" id="xlabel">관찰 위치 x = 1.00</label><input id="xval" type="range" min="-3" max="3" step=".01" value="1"></div><div class="controls" id="ncontrols"><label for="nval">적분 구간 분할</label><input id="nval" type="range" min="4" max="80" step="1" value="20"><span id="nlabel" class="hint">20개</span></div><div class="metrics" id="metrics"></div></section>
-<aside class="panel"><h2 id="sideTitle">미분의 원리</h2><div id="explain" class="explain"></div><div id="steps"></div></aside></div></main><section id="threeD"><div class="panel"><h2>삼차원 함수 계산기</h2><p class="hint">z = f(x,y) 형태의 함수를 입력해 표면 그래프를 확인해 봐. 예: x^2+y^2, sin(x)*cos(y), x*y</p><div class="three-controls"><input id="expr3d" value="x^2+y^2" aria-label="삼차원 함수 입력"><button id="apply3d">그래프 그리기</button></div><div class="graph-wrap" id="surface-wrap"><div class="graph-toolbar"><button type="button" id="surface-zoom-in">+</button><button type="button" id="surface-zoom-out">−</button><button type="button" id="surface-reset">⌂</button></div><div class="orbit-pad" aria-label="3차원 그래프 회전"><button data-orbit="up" aria-label="위로 회전">↑</button><div><button data-orbit="left" aria-label="왼쪽으로 회전">←</button><button data-orbit="down" aria-label="아래로 회전">↓</button><button data-orbit="right" aria-label="오른쪽으로 회전">→</button></div></div><canvas id="surface3d" width="900" height="560" aria-label="삼차원 함수 표면 그래프"></canvas></div><div class="three-controls"><label class="hint">표시 범위 <input id="range3d" type="range" min="2" max="8" step="1" value="4"></label><span class="hint" id="range3d-label">±4</span></div><div class="hint" id="error3d"></div></div></section><footer>수식 계산은 Nerdamer 기반이야. 그래프와 넓이는 개념을 보여주기 위한 수치 근사이며, 적분상수 C는 별도로 표시해.</footer>
+<aside class="panel"><h2 id="sideTitle">미분의 원리</h2><div id="explain" class="explain"></div><div id="steps"></div></aside></div></main><section id="threeD"><div class="panel"><h2>삼차원 함수 계산기</h2><p class="hint">z = f(x,y) 형태의 함수를 입력해 표면 그래프를 확인해 봐. 예: x^2+y^2, sin(x)*cos(y), x*y</p><div class="three-controls"><input id="expr3d" value="x^2+y^2" aria-label="삼차원 함수 입력"><button id="apply3d">그래프 그리기</button></div><div class="graph-wrap" id="surface-wrap"><div class="graph-toolbar"><button type="button" id="surface-zoom-in">+</button><button type="button" id="surface-zoom-out">−</button><button type="button" id="surface-reset">⌂</button></div><div class="orbit-pad" aria-label="3차원 그래프 회전"><button data-orbit="up" aria-label="위로 회전">↑</button><div><button data-orbit="left" aria-label="왼쪽으로 회전">←</button><button data-orbit="top" aria-label="위에서 보기">◎</button><button data-orbit="down" aria-label="아래로 회전">↓</button><button data-orbit="right" aria-label="오른쪽으로 회전">→</button></div></div><canvas id="surface3d" width="900" height="560" aria-label="삼차원 함수 표면 그래프"></canvas></div><div class="three-controls"><label class="hint">표시 범위 <input id="range3d" type="range" min="2" max="8" step="1" value="4"></label><span class="hint" id="range3d-label">±4</span></div><div class="hint" id="error3d"></div></div></section><footer>수식 계산은 Nerdamer 기반이야. 그래프와 넓이는 개념을 보여주기 위한 수치 근사이며, 적분상수 C는 별도로 표시해.</footer>
 <script>
 const $=s=>document.querySelector(s);let mode='diff',expr='x^2',f=null,df=null,anti=null;
 const equationEditor=document.querySelector('header .inputbox'),exampleRow=document.querySelector('header .examples');
@@ -117,7 +117,7 @@ const expressionIndex=document.createElement('span');expressionIndex.className='
 expressionLine.append(expressionIndex,equationEditor);expressionShelf.append(expressionLine,exampleRow);
 graphSection.querySelector('#graph-wrap').after(expressionShelf);
 const compare=document.createElement('section');compare.id='derivative-compare';
-compare.innerHTML='<div class="compare-heading">도함수 f′(x) 그래프 <span>위 그래프와 같은 x축 범위</span></div><svg id="derivative-plot" viewBox="0 0 720 260" role="img" aria-label="도함수 그래프"></svg><div class="correspondence" id="correspondence-cards"></div><div class="monotonic-list" id="monotonic-list"></div>';
+compare.innerHTML='<div class="compare-heading">증가·감소 부호표 <span>하나의 x축에서 f′ 부호와 f의 움직임을 연결</span></div><svg id="derivative-plot" viewBox="0 0 720 260" role="img" aria-label="도함수 그래프"></svg><div class="correspondence" id="correspondence-cards"></div><div class="monotonic-list" id="monotonic-list"></div>';
 expressionShelf.after(compare);
 
 const fmt=n=>Number.isFinite(n)?(Math.abs(n)<.0005?'0':n.toFixed(4)):'정의되지 않음';
@@ -166,19 +166,35 @@ function derivativeSamples(){
  return {vals,scale:Math.max(1,maxAbs*1.12)};
 }
 function drawDerivativeCompare(currentX){
- const svg=$('#derivative-plot'),W2=720,H2=260,L2=58,R2=22,T2=18,B2=34;
- const data=derivativeSamples(),lo=-data.scale,hi=data.scale;
- const px=x=>L2+(x-xmin)/(xmax-xmin)*(W2-L2-R2),py=y=>T2+(hi-y)/(hi-lo)*(H2-T2-B2);
- let out='';
+ const svg=$('#derivative-plot'),W=720,H=190,L=54,R=24,axisY=91;
+ const px=x=>L+(x-xmin)/(xmax-xmin)*(W-L-R);
+ const samples=400,dx=(xmax-xmin)/samples,roots=[];
+ let prevX=xmin,prev=val(df,prevX);
+ for(let i=1;i<=samples;i++){
+  const xx=xmin+i*dx,v=val(df,xx);
+  if(Number.isFinite(prev)&&Number.isFinite(v)&&prev*v<0){
+   let a=prevX,b=xx,fa=prev;
+   for(let k=0;k<28;k++){const m=(a+b)/2,fm=val(df,m);if(!Number.isFinite(fm))break;if(fa*fm<=0)b=m;else{a=m;fa=fm}}
+   roots.push((a+b)/2);
+  }
+  prevX=xx;prev=v;
+ }
+ let cuts=[xmin,...roots,xmax],out='';
+ // One shared x-axis: derivative sign above, original function's direction below.
+ out+='<line x1="'+L+'" y1="'+axisY+'" x2="'+(W-R)+'" y2="'+axisY+'" stroke="#667085" stroke-width="2"/>';
  const step=graphGridStep(xmax-xmin);
- for(let gx=Math.ceil(xmin/step)*step;gx<=xmax+1e-8;gx+=step){out+='<line x1="'+px(gx)+'" y1="'+T2+'" x2="'+px(gx)+'" y2="'+(H2-B2)+'" stroke="#e3e7ec"/><text x="'+px(gx)+'" y="'+(H2-10)+'" fill="#667085" font-size="10" text-anchor="middle">'+Number(gx.toPrecision(4))+'</text>'}
- out+='<line x1="'+L2+'" y1="'+py(0)+'" x2="'+(W2-R2)+'" y2="'+py(0)+'" stroke="#64748b"/>';
- let d='',pen=false;
- for(const p of data.vals){if(!Number.isFinite(p.y)){pen=false;continue}d+=(pen?'L':'M')+px(p.x).toFixed(2)+','+py(p.y).toFixed(2);pen=true}
- out+='<path d="'+d+'" fill="none" stroke="#e58a25" stroke-width="2.8" stroke-linecap="round"/>';
- const cv=val(df,currentX);if(Number.isFinite(cv))out+='<line x1="'+px(currentX)+'" y1="'+T2+'" x2="'+px(currentX)+'" y2="'+(H2-B2)+'" stroke="#2878d0" stroke-dasharray="4 4"/><circle cx="'+px(currentX)+'" cy="'+py(cv)+'" r="5" fill="#2878d0" stroke="white" stroke-width="1.5"/>';
- out+='<text x="12" y="16" fill="#e58a25" font-size="12">f′(x)</text>';
- svg.innerHTML=out;
+ for(let t=Math.ceil(xmin/step)*step;t<=xmax+1e-8;t+=step){const xx=px(t);out+='<line x1="'+xx+'" y1="'+(axisY-6)+'" x2="'+xx+'" y2="'+(axisY+6)+'" stroke="#98a2b3"/><text x="'+xx+'" y="'+(axisY+22)+'" text-anchor="middle" fill="#667085" font-size="10">'+Number(t.toPrecision(4))+'</text>'}
+ for(let i=0;i<cuts.length-1;i++){
+  const a=cuts[i],b=cuts[i+1],mid=(a+b)/2,d=val(df,mid),sign=d>1e-5?1:d< -1e-5?-1:0,x1=px(a),x2=px(b),center=(x1+x2)/2;
+  const color=sign>0?'#159c91':sign<0?'#d97706':'#667085';
+  out+='<line x1="'+x1+'" y1="'+axisY+'" x2="'+x2+'" y2="'+axisY+'" stroke="'+color+'" stroke-width="7" stroke-linecap="round"/>';
+  out+='<text x="'+center+'" y="38" text-anchor="middle" fill="'+color+'" font-size="13" font-weight="700">'+(sign>0?'f′(x) > 0':sign<0?'f′(x) < 0':'f′(x) ≈ 0')+'</text>';
+  out+='<text x="'+center+'" y="63" text-anchor="middle" fill="'+color+'" font-size="13" font-weight="700">'+(sign>0?'f 증가 ↗':sign<0?'f 감소 ↘':'수평')+'</text>';
+ }
+ roots.forEach(r=>{const xx=px(r);out+='<line x1="'+xx+'" y1="20" x2="'+xx+'" y2="130" stroke="#98a2b3" stroke-dasharray="3 3"/><circle cx="'+xx+'" cy="'+axisY+'" r="5" fill="#fff" stroke="#475467" stroke-width="2"/>'});
+ const cx=px(currentX);out+='<line x1="'+cx+'" y1="12" x2="'+cx+'" y2="145" stroke="#2878d0" stroke-width="2" stroke-dasharray="4 3"/><path d="M '+(cx-5)+' 12 L '+(cx+5)+' 12 L '+cx+' 20 Z" fill="#2878d0"/>';
+ out+='<text x="'+L+'" y="166" fill="#2878d0" font-size="11">현재 위치 x = '+currentX.toFixed(2)+'</text><text x="'+(W-R)+'" y="166" text-anchor="end" fill="#667085" font-size="11">한 x축에서 도함수 부호와 원래 함수의 증가·감소를 대응</text>';
+ svg.setAttribute('viewBox','0 0 720 190');svg.innerHTML=out;
 }
 function localTrend(v){if(!Number.isFinite(v))return '도함수가 정의되지 않음';if(v>1e-5)return '증가 중 (f′(x) > 0)';if(v< -1e-5)return '감소 중 (f′(x) < 0)';return '기울기 0에 가까움 (극값 후보)'}
 function trendIntervals(){
@@ -267,11 +283,46 @@ $('#auth-submit').addEventListener('click',async()=>{
  }
 });
 
-let fn3d=null,range3d=4,rot3d=0,pitch3d=-.42;function draw3d(){const canvas=$('#surface3d'),ctx=canvas.getContext('2d'),w=canvas.width,h=canvas.height;ctx.clearRect(0,0,w,h);if(!fn3d){ctx.fillStyle='#667085';ctx.font='18px sans-serif';ctx.fillText('함수를 입력하고 그래프 그리기를 눌러 줘.',25,35);return}const project=(x,y,z)=>{const a=x*Math.cos(rot3d)-y*Math.sin(rot3d),b=x*Math.sin(rot3d)+y*Math.cos(rot3d),v=b*Math.cos(pitch3d)-z*Math.sin(pitch3d),depth=b*Math.sin(pitch3d)+z*Math.cos(pitch3d);return {x:w/2+(a-v)*47,y:h*.57+(a+v)*22-depth*25}};ctx.strokeStyle='#aeb8c5';ctx.lineWidth=1;for(let i=0;i<=24;i++){let q=-range3d+2*range3d*i/24;for(let axis=0;axis<2;axis++){ctx.beginPath();for(let j=0;j<=50;j++){let t=-range3d+2*range3d*j/50,x=axis===0?q:t,y=axis===0?t:q,z;try{z=fn3d(x,y)}catch(e){z=NaN}if(!Number.isFinite(z)||Math.abs(z)>30){continue}const p=project(x,y,z);if(j===0)ctx.moveTo(p.x,p.y);else ctx.lineTo(p.x,p.y)}ctx.stroke()}}ctx.fillStyle='#4b5563';ctx.font='15px sans-serif';ctx.fillText('z = '+$('#expr3d').value,18,25)}
+let fn3d=null,range3d=4,rot3d=0,pitch3d=-.42;
+function draw3d(){
+ const canvas=$('#surface3d'),ctx=canvas.getContext('2d'),w=canvas.width,h=canvas.height;
+ ctx.clearRect(0,0,w,h);ctx.fillStyle='#fff';ctx.fillRect(0,0,w,h);
+ const project=(x,y,z)=>{const a=x*Math.cos(rot3d)-y*Math.sin(rot3d),b=x*Math.sin(rot3d)+y*Math.cos(rot3d),v=b*Math.cos(pitch3d)-z*Math.sin(pitch3d),depth=b*Math.sin(pitch3d)+z*Math.cos(pitch3d);return {x:w/2+(a-v)*47,y:h*.57+(a+v)*22-depth*25}};
+ const line3=(p1,p2,color,width=2)=>{ctx.beginPath();ctx.moveTo(p1.x,p1.y);ctx.lineTo(p2.x,p2.y);ctx.strokeStyle=color;ctx.lineWidth=width;ctx.stroke()};
+ // Coordinate axes and grid: x, y, and the vertical z-axis are always drawn.
+ for(let q=-range3d;q<=range3d+.001;q+=1){
+  line3(project(-range3d,q,0),project(range3d,q,0),'#e3e7ec',1);
+  line3(project(q,-range3d,0),project(q,range3d,0),'#e3e7ec',1);
+ }
+ line3(project(-range3d,0,0),project(range3d,0,0),'#2878d0',2.5);
+ line3(project(0,-range3d,0),project(0,range3d,0),'#159c91',2.5);
+ line3(project(0,0,-range3d),project(0,0,range3d),'#e58a25',3);
+ ctx.font='bold 18px Arial';ctx.fillStyle='#2878d0';let p=project(range3d,0,0);ctx.fillText('x',p.x+5,p.y);
+ ctx.fillStyle='#159c91';p=project(0,range3d,0);ctx.fillText('y',p.x+5,p.y);
+ ctx.fillStyle='#e58a25';p=project(0,0,range3d);ctx.fillText('z',p.x+6,p.y-3);
+ ctx.font='12px Arial';ctx.fillStyle='#667085';
+ for(let q=-range3d;q<=range3d;q++){if(q===0)continue;p=project(q,0,0);ctx.fillText(String(q),p.x-4,p.y+15);p=project(0,q,0);ctx.fillText(String(q),p.x+5,p.y+13);p=project(0,0,q);ctx.fillText(String(q),p.x+7,p.y+4)}
+ if(!fn3d){ctx.fillStyle='#667085';ctx.font='18px sans-serif';ctx.fillText('함수를 입력하고 그래프 그리기를 눌러 줘.',25,35);return}
+ // Draw the surface as a mesh.
+ ctx.strokeStyle='#2878d0';ctx.lineWidth=1.15;
+ for(let i=0;i<=28;i++){
+  const q=-range3d+2*range3d*i/28;
+  for(let axis=0;axis<2;axis++){
+   ctx.beginPath();let started=false;
+   for(let j=0;j<=64;j++){
+    const t=-range3d+2*range3d*j/64,x=axis===0?q:t,y=axis===0?t:q;
+    let z;try{z=fn3d(x,y)}catch(e){z=NaN}
+    if(!Number.isFinite(z)||Math.abs(z)>range3d*3){started=false;continue}
+    const v=project(x,y,z);if(!started){ctx.moveTo(v.x,v.y);started=true}else ctx.lineTo(v.x,v.y)
+   }ctx.stroke()
+  }
+ }
+ ctx.fillStyle='#344054';ctx.font='14px sans-serif';ctx.fillText('z = '+$('#expr3d').value,18,25);
+}
 function compile3d(){try{const raw=nerdamer.convertFromLaTeX($('#expr3d').value).toString();fn3d=nerdamer(raw).buildFunction(['x','y']);$('#error3d').textContent='';draw3d()}catch(e){$('#error3d').textContent='수식을 해석하지 못했어. 예: x^2+y^2';fn3d=null;draw3d()}}
 function change3dZoom(delta){range3d=Math.max(2,Math.min(8,range3d+delta));$('#range3d').value=range3d;$('#range3d-label').textContent='±'+range3d;draw3d()}
 $('#surface-zoom-in').addEventListener('click',()=>change3dZoom(-1));$('#surface-zoom-out').addEventListener('click',()=>change3dZoom(1));$('#surface-reset').addEventListener('click',()=>{rot3d=0;pitch3d=-.42;change3dZoom(4-range3d)});
-$('#surface-wrap').addEventListener('wheel',e=>{e.preventDefault();change3dZoom(e.deltaY>0?1:-1)},{passive:false});let surfaceDrag=null;$('#surface-wrap').addEventListener('pointerdown',e=>{if(e.target.closest('.graph-toolbar,.orbit-pad'))return;surfaceDrag={x:e.clientX,y:e.clientY,yaw:rot3d,pitch:pitch3d};e.currentTarget.setPointerCapture(e.pointerId)});$('#surface-wrap').addEventListener('pointermove',e=>{if(!surfaceDrag)return;rot3d=surfaceDrag.yaw+(e.clientX-surfaceDrag.x)*.008;pitch3d=Math.max(-1.48,Math.min(1.48,surfaceDrag.pitch+(e.clientY-surfaceDrag.y)*.008));draw3d()});$('#surface-wrap').addEventListener('pointerup',()=>surfaceDrag=null);$('#surface-wrap').addEventListener('pointercancel',()=>surfaceDrag=null);document.querySelectorAll('[data-orbit]').forEach(btn=>btn.addEventListener('click',()=>{const d=btn.dataset.orbit;if(d==='left')rot3d-=.16;if(d==='right')rot3d+=.16;if(d==='up')pitch3d=Math.max(-1.48,pitch3d-.14);if(d==='down')pitch3d=Math.min(1.48,pitch3d+.14);draw3d()}));$('#surface-wrap').addEventListener('keydown',e=>{const k=e.key;if(!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(k))return;e.preventDefault();if(k==='ArrowLeft')rot3d-=.12;if(k==='ArrowRight')rot3d+=.12;if(k==='ArrowUp')pitch3d=Math.max(-1.48,pitch3d-.12);if(k==='ArrowDown')pitch3d=Math.min(1.48,pitch3d+.12);draw3d()});$('#surface-wrap').tabIndex=0;
+$('#surface-wrap').addEventListener('wheel',e=>{e.preventDefault();change3dZoom(e.deltaY>0?1:-1)},{passive:false});let surfaceDrag=null;$('#surface-wrap').addEventListener('pointerdown',e=>{if(e.target.closest('.graph-toolbar,.orbit-pad'))return;surfaceDrag={x:e.clientX,y:e.clientY,yaw:rot3d,pitch:pitch3d};e.currentTarget.setPointerCapture(e.pointerId)});$('#surface-wrap').addEventListener('pointermove',e=>{if(!surfaceDrag)return;rot3d=surfaceDrag.yaw+(e.clientX-surfaceDrag.x)*.008;pitch3d=Math.max(-1.55,Math.min(1.55,surfaceDrag.pitch+(e.clientY-surfaceDrag.y)*.008));draw3d()});$('#surface-wrap').addEventListener('pointerup',()=>surfaceDrag=null);$('#surface-wrap').addEventListener('pointercancel',()=>surfaceDrag=null);document.querySelectorAll('[data-orbit]').forEach(btn=>btn.addEventListener('click',()=>{const d=btn.dataset.orbit;if(d==='left')rot3d-=.16;if(d==='right')rot3d+=.16;if(d==='up')pitch3d=Math.max(-1.55,pitch3d-.14);if(d==='down')pitch3d=Math.min(1.55,pitch3d+.14);if(d==='top')pitch3d=0;draw3d()}));$('#surface-wrap').addEventListener('keydown',e=>{const k=e.key;if(!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(k))return;e.preventDefault();if(k==='ArrowLeft')rot3d-=.12;if(k==='ArrowRight')rot3d+=.12;if(k==='ArrowUp')pitch3d=Math.max(-1.48,pitch3d-.12);if(k==='ArrowDown')pitch3d=Math.min(1.48,pitch3d+.12);draw3d()});$('#surface-wrap').tabIndex=0;
 $('#apply3d').addEventListener('click',compile3d);$('#range3d').addEventListener('input',e=>{range3d=+e.target.value;$('#range3d-label').textContent='±'+range3d;draw3d()});
 try{compile();setMode('diff');compile3d()}catch(e){$('#error').textContent='수식 계산 라이브러리를 불러오지 못했어. 인터넷 연결을 확인해 줘.'}
 </script></body></html>
