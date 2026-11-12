@@ -287,22 +287,36 @@ const authStoreKey='calc-lab-demo-account-v1';const sessionKey='calc-lab-browser
 function showAuth(mode){authMode=mode;$('#auth-title').textContent=mode==='signup'?'회원가입':'로그인';$('#auth-submit').textContent=mode==='signup'?'가입하기':'로그인';$('#auth-switch').textContent=mode==='signup'?'로그인으로':'회원가입으로';$('#auth-status').textContent='';$('#auth').classList.add('open')}
 async function digest(text){const bytes=new TextEncoder().encode(text);const hash=await crypto.subtle.digest('SHA-256',bytes);return Array.from(new Uint8Array(hash)).map(v=>v.toString(16).padStart(2,'0')).join('')}
 $('#start')?.addEventListener('click',()=>$('#intro').classList.add('hide'));$('#math-disc').addEventListener('click',()=>$('#hub-menu').classList.toggle('open'));
-function enterTool(dest){
+function showHome(){
+ const main=document.querySelector('main'),header=document.querySelector('header'),three=$('#threeD');
+ main.style.display='none';header.style.display='none';three.style.setProperty('display','none','important');
+ $('#account-bar').style.display='none';document.body.dataset.page='home';
+ $('#intro').classList.remove('hide');$('#hub-menu').classList.remove('open');
+ window.scrollTo(0,0);
+}
+function enterTool(dest,fromHistory=false){
  $('#intro').classList.add('hide');$('#hub-menu').classList.remove('open');
- const main=document.querySelector('main'),header=document.querySelector('header');
- $('#threeD').style.display='none';main.style.display='none';header.style.display='none';
+ const main=document.querySelector('main'),header=document.querySelector('header'),three=$('#threeD');
+ main.style.display='none';header.style.display='none';three.style.setProperty('display','none','important');
  $('#account-bar').style.display='flex';document.body.dataset.page=dest;
- if(dest==='3d'){$('#threeD').style.display='block';draw3d();window.scrollTo(0,0);return}
+ if(!fromHistory)history.pushState({calcLabTool:dest},'', '#'+dest);
+ if(dest==='3d'){
+  three.style.setProperty('display','block','important');
+  three.style.visibility='visible';three.style.opacity='1';
+  draw3d();requestAnimationFrame(()=>{draw3d();const canvas=$('#surface3d');canvas.style.display='block';});
+  window.scrollTo(0,0);return;
+ }
  header.style.display='block';main.style.display='flex';
  const pages={calculator:['함수 계산기','데스모스처럼 함수식을 입력하고 그래프를 그리고, 확대·축소하거나 이동해.'],derivative:['미분 원리','접선의 기울기와 순간변화율, 도함수의 부호가 함수의 증가·감소를 결정하는 과정을 살펴봐.'],integral:['적분 원리','곡선 아래의 작은 넓이를 더해 정적분이 되는 과정과 누적량의 의미를 살펴봐.']};
  const page=pages[dest]||pages.calculator;$('#page-title').textContent=page[0];$('#page-description').textContent=page[1];
- setMode(dest==='integral'?'int':dest==='derivative'?'diff':'calc');window.scrollTo({top:0,behavior:'smooth'});
+ setMode(dest==='integral'?'int':dest==='derivative'?'diff':'calc');window.scrollTo(0,0);
 }
+window.addEventListener('popstate',()=>showHome());
 document.querySelectorAll('[data-dest]').forEach(b=>b.addEventListener('click',()=>enterTool(b.dataset.dest)));
 function updateAccount(){const logged=!!currentUser;$('#account-label').textContent=logged?currentUser+' 로그인됨':'';$('#account-bar').style.display=logged?'flex':'none';$('#intro-account').style.display=logged?'none':'block'}
-$('#home-return').addEventListener('click',()=>{document.querySelector('main').style.display='none';$('header').style.display='none';$('#threeD').style.display='none';document.body.dataset.page='home';$('#intro').classList.remove('hide');$('#hub-menu').classList.remove('open')});
+$('#home-return').addEventListener('click',()=>{if(history.state&&history.state.calcLabTool){history.back()}else{showHome()}});
 $('#logout').addEventListener('click',()=>{localStorage.removeItem(sessionKey);currentUser='';updateAccount();$('#intro').classList.remove('hide')});
-updateAccount();document.querySelector('main').style.display='none';$('header').style.display='none';$('#threeD').style.display='none';document.body.dataset.page='home';$('#intro').classList.remove('hide');
+updateAccount();document.querySelector('main').style.display='none';$('header').style.display='none';$('#threeD').style.setProperty('display','none','important');document.body.dataset.page='home';$('#intro').classList.remove('hide');
 $('#open-signup').addEventListener('click',()=>showAuth('signup'));
 $('#open-login').addEventListener('click',()=>showAuth('login'));
 $('#auth-close').addEventListener('click',()=>$('#auth').classList.remove('open'));
