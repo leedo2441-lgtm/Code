@@ -260,7 +260,7 @@ function render(){
   $('#steps').innerHTML='<div class="step">그래프의 색칠된 직사각형 하나하나는 작은 넓이의 근삿값이야.</div><div class="step">분할 개수를 늘리면 직사각형의 폭이 좁아져 곡선 아래 넓이에 가까워져.</div><div class="step">x가 음수이면 적분 방향 때문에 부호가 음수가 될 수 있어.</div>';
  }else{
   $('#graphTitle').textContent='입력한 함수의 전체 그래프';$('#sideTitle').textContent='함수 하나로 미분과 적분 연결하기';
-  $('#explain').innerHTML='<div class="formula">f(x) = '+expr+'<br>f′(x) = '+der+'<br>F′(x) = f(x)</div><p><b>두 그래프를 함께 읽어 봐.</b> 위 파란 그래프는 원래 함수 f(x), 아래 주황 그래프는 도함수 f′(x)야. 같은 x에서 아래 그래프가 양수면 위 함수는 증가하고, 음수면 위 함수는 감소해.</p><div class="step">f′(x) > 0 → f(x) 증가</div><div class="step">f′(x) < 0 → f(x) 감소</div><div class="step">f′(x) = 0 → 접선이 수평인 점(극값 후보)</div><p>적분도 연결돼. F(x)=∫₀ˣ f(t)dt라고 두면 F′(x)=f(x). 따라서 원래 함수 f가 양수인 구간에서 누적 적분 F는 증가하고, f가 음수인 구간에서 감소해.</p>
+  $('#explain').innerHTML='<div class="formula">f(x) = '+expr+'<br>f′(x) = '+der+'<br>F′(x) = f(x)</div><p><b>두 그래프를 함께 읽어 봐.</b> 위 파란 그래프는 원래 함수 f(x), 아래 주황 그래프는 도함수 f′(x)야. 같은 x에서 아래 그래프가 양수면 위 함수는 증가하고, 음수면 위 함수는 감소해.</p><div class="step">f′(x) > 0 → f(x) 증가</div><div class="step">f′(x) < 0 → f(x) 감소</div><div class="step">f′(x) = 0 → 접선이 수평인 점(극값 후보)</div><p>적분도 연결돼. F(x)=∫₀ˣ f(t)dt라고 두면 F′(x)=f(x). 따라서 원래 함수 f가 양수인 구간에서 누적 적분 F는 증가하고, f가 음수인 구간에서 감소해.</p>';
   $('#steps').innerHTML='<div class="step">1. 아래 주황색 도함수 그래프가 x축 위에 있으면 원래 함수는 올라가.</div><div class="step">2. 주황색 그래프가 x축 아래에 있으면 원래 함수는 내려가.</div><div class="step">3. 주황색 그래프가 부호를 +에서 −로 바꾸면 원래 함수는 극대 후보, −에서 +로 바꾸면 극소 후보야.</div><div class="step">4. 적분에서는 반대로 f(x)의 부호를 봐. f가 +면 누적 적분 F가 증가하고, f가 −면 F가 감소해.</div>';
  }
  draw();
