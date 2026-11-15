@@ -192,7 +192,7 @@ function draw(){
  if((mode==='diff'||mode==='both')&&Number.isFinite(slope)&&Number.isFinite(y)){const h=1.15;out+=line(x-h,y-slope*h,x+h,y+slope*h,'#e58a25',2,'7 5');out+='<circle cx="'+sx(x)+'" cy="'+sy(y)+'" r="5.5" fill="#e58a25" stroke="#fff" stroke-width="1.5"/>'}
  $('#plot').innerHTML=out+'<text x="'+(W-22)+'" y="'+(H-9)+'" fill="#9aaac2" font-size="12">x</text>';
  $('#xlabel').textContent='관찰 위치 x = '+x.toFixed(2);$('#nlabel').textContent=n+'개';
- const cards=[['함숫값 f(x)',fmt(y)],['도함수 f′(x)',fmt(val(df,x))],['부정적분 F(x)',anti.toString()],['0부터 x까지의 정적분',fmt(area(0,x,n))]];
+ const cards=[['함숫값 f(x)',fmt(y)],['도함수 f′(x)',fmt(val(df,x))],['부정적분 F(x)',nerdamer.integrate(expr,'x').toString()],['0부터 x까지의 정적분',fmt(area(0,x,n))]];
  
  $('#metrics').innerHTML=cards.map(c=>'<div class="metric"><small>'+c[0]+'</small><strong>'+c[1]+'</strong></div>').join('');
  $('#metrics').style.display=mode==='calc'?'none':'grid';
