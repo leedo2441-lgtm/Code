@@ -144,6 +144,50 @@ footer{padding:14px;color:#697586;background:#f7f8fa}
  .hub-menu.open .menu-left{transform:translate(-50%,-50%) translateX(-min(35vw,145px)) scale(1)}
  .hub-menu.open .menu-right{transform:translate(-50%,-50%) translateX(min(35vw,145px)) scale(1)}
 }
+
+/* Motion polish + resilient interaction affordances (CSS-only; keeps existing app logic intact) */
+:root{--motion-fast:160ms;--motion-mid:260ms;--motion-slow:520ms;--ease-out:cubic-bezier(.2,.75,.25,1);--ease-spring:cubic-bezier(.2,.85,.25,1.18)}
+html{scroll-behavior:smooth}
+button,a,input,math-field{ -webkit-tap-highlight-color:transparent }
+button{transition:transform var(--motion-fast) var(--ease-out),background-color var(--motion-fast) ease,border-color var(--motion-fast) ease,box-shadow var(--motion-fast) ease,filter var(--motion-fast) ease}
+button:hover{filter:brightness(1.045)}
+button:active{transform:translateY(1px) scale(.985)}
+button:focus-visible,input:focus-visible,math-field:focus-visible{outline:3px solid #75aaff;outline-offset:3px}
+.panel,.expression-shelf,.correspondence-card,.metric{transition:box-shadow var(--motion-mid) var(--ease-out),border-color var(--motion-mid) ease}
+.panel:focus-within{border-color:#b7cbe5}
+#intro:not(.hide) .intro-inner{animation:studio-arrive 720ms var(--ease-out) both}
+#intro:not(.hide) .intro-kicker{animation:soft-rise 620ms 70ms var(--ease-out) both}
+#intro:not(.hide) .intro-inner h1{animation:soft-rise 700ms 130ms var(--ease-out) both}
+#intro:not(.hide) .intro-sub{animation:soft-rise 700ms 190ms var(--ease-out) both}
+#intro:not(.hide) .disc-menu-wrap{animation:disc-arrive 850ms 120ms var(--ease-spring) both}
+#intro:not(.hide) .start-btn{animation:soft-rise 700ms 280ms var(--ease-out) both}
+@keyframes studio-arrive{from{opacity:0;filter:blur(8px)}to{opacity:1;filter:blur(0)}}
+@keyframes soft-rise{from{opacity:0;transform:translateY(13px)}to{opacity:1;transform:translateY(0)}}
+@keyframes disc-arrive{0%{opacity:0;transform:translateY(18px) scale(.86)}72%{opacity:1;transform:translateY(-3px) scale(1.025)}100%{opacity:1;transform:translateY(0) scale(1)}}
+.math-disc{will-change:transform;transition:transform 360ms var(--ease-spring),box-shadow 360ms ease,filter 360ms ease}
+.math-disc:hover{filter:saturate(1.12)}
+.hub-menu button{transition:opacity 220ms ease,transform 420ms var(--ease-spring),background-color 180ms ease,border-color 180ms ease,box-shadow 180ms ease}
+.hub-menu.open button{box-shadow:0 12px 32px #0003}
+.hub-menu.open button:hover{box-shadow:0 16px 36px #0005;filter:brightness(1.12)}
+.start-btn{transition:transform 220ms var(--ease-spring),box-shadow 220ms ease,filter 220ms ease}
+.start-btn:hover{transform:translateY(-2px);box-shadow:0 12px 38px #367bd677}
+#graph-wrap,#surface-wrap{contain:layout paint}
+#graph-wrap svg,#surface3d{transition:opacity 180ms ease}
+.graph-toolbar button,.orbit-pad button{transition:transform 150ms var(--ease-out),background-color 150ms ease,border-color 150ms ease,box-shadow 150ms ease}
+.graph-toolbar button:hover,.orbit-pad button:hover{transform:translateY(-2px);box-shadow:0 5px 14px #0002}
+input[type=range]{cursor:pointer;touch-action:pan-y}
+input[type=range]::-webkit-slider-thumb{transition:box-shadow 160ms ease,transform 160ms var(--ease-spring)}
+input[type=range]:active::-webkit-slider-thumb{transform:scale(1.16);box-shadow:0 0 0 7px #2878d022}
+input[type=range]:focus-visible{outline-offset:5px}
+#articlePage{animation:soft-rise 360ms var(--ease-out) both}
+#auth.open .auth-card{animation:modal-arrive 280ms var(--ease-spring) both}
+@keyframes modal-arrive{from{opacity:0;transform:translateY(12px) scale(.975)}to{opacity:1;transform:translateY(0) scale(1)}}
+@media(hover:hover){.metric:hover,.correspondence-card:hover{box-shadow:0 8px 24px #182b4510;border-color:#c8d5e5}}
+@media(prefers-reduced-motion:reduce){
+ html{scroll-behavior:auto}
+ *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}
+}
+
 </style></head><body>
 <div id="intro"><div class="intro-inner"><div class="intro-kicker">VISUAL MATHEMATICS LAB</div><h1>미적분 탐구실</h1><p class="intro-sub">중앙의 수학 원판을 눌러 원하는 도구를 선택해.</p><div class="formula-rain" aria-hidden="true"><span style="--x:8%;--y:12%;--delay:0s">limₕ→₀</span><span style="--x:65%;--y:20%;--delay:.7s">∫ₐᵇ f(x)dx</span><span style="--x:28%;--y:62%;--delay:1.4s">d/dx xⁿ</span><span style="--x:76%;--y:65%;--delay:2.1s">∇f(x,y,z)</span></div><div class="disc-menu-wrap"><button class="math-disc" id="math-disc" aria-label="수학 메뉴 열기"><span>d/dx</span><i>∫</i></button><div class="hub-menu" id="hub-menu" aria-label="계산 도구 메뉴"><button class="menu-up" data-dest="calculator">함수 계산기</button><button class="menu-up-right" data-dest="epsilon">엡실론-델타 논법</button><button class="menu-right" data-dest="integral">적분 원리</button><button class="menu-down-right" data-dest="history">미적분이란?</button><button class="menu-down" data-dest="3d">삼차원 함수 계산기</button><button class="menu-left" data-dest="derivative">미분 원리</button></div></div><div class="intro-links" id="intro-account">로그인이 필요해? <button id="open-signup">회원가입</button> · <button id="open-login">로그인</button></div></div></div>
 <div id="auth"><div class="auth-card"><h2 id="auth-title">회원가입</h2><p>이 브라우저에서만 사용하는 체험용 계정이야.</p><input id="auth-user" maxlength="24" placeholder="아이디 (영문·숫자 3~24자)" autocomplete="username"><input id="auth-pass" type="password" minlength="6" placeholder="비밀번호 (6자 이상)" autocomplete="current-password"><div class="auth-status" id="auth-status"></div><div class="auth-actions"><button id="auth-submit">가입하기</button><button class="secondary" id="auth-switch">로그인으로</button><button class="secondary" id="auth-close">닫기</button></div><p class="auth-note">체험용 로그인 정보는 현재 브라우저에만 저장돼. 실제 서비스 계정이나 안전한 서버 인증은 아니며, 다른 기기와 동기화되지 않아.</p></div></div>
